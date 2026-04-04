@@ -70,13 +70,15 @@ nav.solid .hamburger span{background:var(--charcoal)}
   font-weight:300;
   color:rgba(255,255,255,0.6);
   text-decoration:none;
-  padding:1rem 0;
+  padding:1.2rem 0;
   border-bottom:1px solid rgba(255,255,255,0.08);
   display:block;
   cursor:pointer;
   -webkit-tap-highlight-color:rgba(184,154,106,0.2);
   transition:color 0.2s,padding-left 0.2s;
   user-select:none;
+  min-height:60px;
+  touch-action:manipulation;
 }
 .mobile-menu-inner a:active{color:var(--gold);padding-left:12px}
 .mobile-menu-inner a.active{color:var(--gold)}
@@ -121,11 +123,11 @@ nav.solid .hamburger span{background:var(--charcoal)}
 .sec-title{font-family:var(--serif);font-size:clamp(1.9rem,3.5vw,3rem);font-weight:300;line-height:1.12;color:var(--charcoal)}
 .sec-title em{font-style:italic;color:var(--gold)}
 .sec-title-w{color:var(--white)}
-.btn-gold{font-family:var(--sans);font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--charcoal);background:var(--gold);padding:14px 30px;border-radius:2px;display:inline-block;cursor:pointer;border:none;transition:background 0.3s,transform 0.2s,box-shadow 0.3s;text-decoration:none}
+.btn-gold{font-family:var(--sans);font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--charcoal);background:var(--gold);padding:14px 30px;border-radius:2px;display:inline-block;cursor:pointer;border:none;transition:background 0.3s,transform 0.2s,box-shadow 0.3s;text-decoration:none;touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn-gold:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:0 8px 24px rgba(184,154,106,0.28)}
-.btn-dark{font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--charcoal);background:transparent;padding:13px 30px;border:1px solid rgba(28,28,28,0.28);border-radius:2px;display:inline-block;cursor:pointer;text-decoration:none;transition:all 0.3s;font-family:var(--sans)}
+.btn-dark{font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--charcoal);background:transparent;padding:13px 30px;border:1px solid rgba(28,28,28,0.28);border-radius:2px;display:inline-block;cursor:pointer;text-decoration:none;transition:all 0.3s;font-family:var(--sans);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn-dark:hover{border-color:var(--gold);background:var(--gold-pale);transform:translateY(-2px)}
-.btn-white{font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);background:transparent;padding:13px 30px;border:1px solid rgba(255,255,255,0.35);border-radius:2px;display:inline-block;cursor:pointer;text-decoration:none;transition:all 0.3s;font-family:var(--sans)}
+.btn-white{font-size:0.72rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;color:var(--white);background:transparent;padding:13px 30px;border:1px solid rgba(255,255,255,0.35);border-radius:2px;display:inline-block;cursor:pointer;text-decoration:none;transition:all 0.3s;font-family:var(--sans);touch-action:manipulation;-webkit-tap-highlight-color:transparent}
 .btn-white:hover{border-color:var(--gold);background:rgba(184,154,106,0.1);transform:translateY(-2px)}
 .page-hero{padding-top:64px;background:var(--charcoal);position:relative;overflow:hidden}
 .page-hero-bg{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0.14}
@@ -455,14 +457,14 @@ footer{background:#141414;padding:56px 5vw 24px}
   <button class="mob-close" onclick="toggleMenu()" type="button" aria-label="Close">
     <svg viewBox="0 0 20 20" fill="none"><line x1="4" y1="4" x2="16" y2="16"/><line x1="16" y1="4" x2="4" y2="16"/></svg>
   </button>
-  <div class="mobile-menu-inner">
-    <a onclick="goTo('home')">Home</a>
-    <a onclick="goTo('about')">About</a>
-    <a onclick="goTo('services')">Services</a>
-    <a onclick="goTo('properties')">Properties</a>
-    <a onclick="goTo('testimonials')">Testimonials</a>
-    <a onclick="goTo('contact')">Contact</a>
-    <a onclick="goTo('contact')" class="mob-cta">Book Consultation</a>
+  <div class="mobile-menu-inner" id="mobileMenuInner">
+    <a ontouchend="goTo('home')" onclick="goTo('home')">Home</a>
+    <a ontouchend="goTo('about')" onclick="goTo('about')">About</a>
+    <a ontouchend="goTo('services')" onclick="goTo('services')">Services</a>
+    <a ontouchend="goTo('properties')" onclick="goTo('properties')">Properties</a>
+    <a ontouchend="goTo('testimonials')" onclick="goTo('testimonials')">Testimonials</a>
+    <a ontouchend="goTo('contact')" onclick="goTo('contact')">Contact</a>
+    <a ontouchend="goTo('contact')" onclick="goTo('contact')" class="mob-cta">Book Consultation</a>
   </div>
 </div>
 
@@ -479,8 +481,8 @@ footer{background:#141414;padding:56px 5vw 24px}
       <h1 class="hero-h1">Your next chapter<br>starts <em>right here</em></h1>
       <p class="hero-sub">We believe real estate is more than just transactions. It is about building lasting relationships and helping you move forward with confidence.</p>
       <div class="hero-actions">
-        <button class="btn-gold" onclick="goTo('properties')">Explore Properties</button>
-        <button class="btn-white" onclick="goTo('contact')">Book Consultation</button>
+        <button class="btn-gold" ontouchend="goTo('properties')" onclick="goTo('properties')">Explore Properties</button>
+        <button class="btn-white" ontouchend="goTo('contact')" onclick="goTo('contact')">Book Consultation</button>
       </div>
     </div>
     <div class="hero-stats">
@@ -502,7 +504,7 @@ footer{background:#141414;padding:56px 5vw 24px}
       <div class="sp-card reveal d2"><span class="sp-num">03</span><svg class="sp-icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="7" y="9" width="28" height="26" rx="1"/><path d="M7 17h28M15 9v8M27 9v8"/><path d="M12 24h7M12 29h12"/></svg><h3 class="sp-title">Renovations</h3><p class="sp-desc">Strategic renovations that maximise value and modernise your living spaces.</p></div>
       <div class="sp-card reveal d3"><span class="sp-num">04</span><svg class="sp-icon" viewBox="0 0 42 42" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="5" y="16" width="22" height="22" rx="1"/><path d="M5 24h22M14 16V8h18v10"/><line x1="27" y1="22" x2="32" y2="22"/><line x1="27" y1="27" x2="32" y2="27"/></svg><h3 class="sp-title">Extensions</h3><p class="sp-desc">Thoughtfully designed additions that expand your space seamlessly.</p></div>
     </div>
-    <div style="text-align:center"><button class="btn-dark reveal" onclick="goTo('services')">View All Services</button></div>
+    <div style="text-align:center"><button class="btn-dark reveal" ontouchend="goTo('services')" onclick="goTo('services')">View All Services</button></div>
   </section>
 
   <section class="why-section">
@@ -516,7 +518,7 @@ footer{background:#141414;padding:56px 5vw 24px}
           <div class="why-item reveal d3"><div class="wi-num">03</div><div class="wi-title">Full Transparency</div><p class="wi-text">Clear communication at every step, no surprises.</p></div>
           <div class="why-item reveal d4"><div class="wi-num">04</div><div class="wi-title">Trusted Network</div><p class="wi-text">Premium builders, lenders and industry professionals.</p></div>
         </div>
-        <button class="btn-gold reveal" onclick="goTo('about')">Learn More About Us</button>
+        <button class="btn-gold reveal" ontouchend="goTo('about')" onclick="goTo('about')">Learn More About Us</button>
       </div>
       <div class="why-img-wrap reveal"><img src="https://images.unsplash.com/photo-1600607687939-ce8a6c25118c?q=80&w=900" alt="Premium home interior" class="why-img" loading="lazy"></div>
     </div>
@@ -529,7 +531,7 @@ footer{background:#141414;padding:56px 5vw 24px}
       <div class="tp-card reveal d1"><div class="tp-stars"><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg></div><p class="tp-text">Their attention to detail and market knowledge is unmatched. We felt confident every step of the way.</p><div class="tp-divider"></div><div class="tp-profile"><img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=100" class="tp-avatar" loading="lazy"><div><div class="tp-name">Olivia Harris</div><div class="tp-role">Property Investor, Point Cook</div></div></div></div>
       <div class="tp-card reveal d2"><div class="tp-stars"><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg><svg class="tp-star" viewBox="0 0 16 16"><polygon points="8,1 10.1,5.5 15,6.1 11.5,9.5 12.5,14.5 8,12 3.5,14.5 4.5,9.5 1,6.1 5.9,5.5"/></svg></div><p class="tp-text">From planning to execution, everything was handled perfectly. Highly recommend for renovations and extensions.</p><div class="tp-divider"></div><div class="tp-profile"><img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?q=80&w=100" class="tp-avatar" loading="lazy"><div><div class="tp-name">Daniel Smith</div><div class="tp-role">Renovation Client, Tarneit</div></div></div></div>
     </div>
-    <div style="text-align:center"><button class="btn-dark reveal" onclick="goTo('testimonials')">Read All Reviews</button></div>
+    <div style="text-align:center"><button class="btn-dark reveal" ontouchend="goTo('testimonials')" onclick="goTo('testimonials')">Read All Reviews</button></div>
   </section>
   
 <footer>
@@ -565,7 +567,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#3f5651595011525e51514f4d504f5a4d4b46584d504a4f7f58525e5653115c5052"><span class="__cf_email__" data-cfemail="51383f373e7f3c303f3f21233e213423252836233e242111363c30383d7f323e3c">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -606,7 +608,7 @@ footer{background:#141414;padding:56px 5vw 24px}
         <div class="aval"><span class="aval-icon">&#9670;</span><span class="aval-text">Personalised Service</span></div>
         <div class="aval"><span class="aval-icon">&#9670;</span><span class="aval-text">End-to-End Support</span></div>
       </div>
-      <button class="btn-gold reveal d4" onclick="goTo('contact')">Get in Touch</button>
+      <button class="btn-gold reveal d4" ontouchend="goTo('contact')" onclick="goTo('contact')">Get in Touch</button>
     </div>
   </div>
   <section class="mission-section">
@@ -663,7 +665,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#b0d9ded6df9eddd1dedec0c2dfc0d5c2c4c9d7c2dfc5c0f0d7ddd1d9dc9ed3dfdd"><span class="__cf_email__" data-cfemail="3950575f561754585757494b56495c4b4d405e4b564c49795e54585055175a5654">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -697,27 +699,27 @@ footer{background:#141414;padding:56px 5vw 24px}
   <div class="svc-list">
     <div class="svc-item reveal">
       <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?q=80&w=900" alt="House and Land" class="svc-img" loading="lazy"></div>
-      <div class="svc-content"><span class="svc-num">01</span><h2 class="svc-title">House and Land Packages</h2><p class="svc-desc">We curate house and land packages combining prime Melbourne locations with thoughtfully designed homes, delivering exceptional value from day one.</p><div class="svc-feats"><div class="svc-feat">Access to exclusive land releases</div><div class="svc-feat">Trusted builder partnerships</div><div class="svc-feat">Fixed-price contracts available</div><div class="svc-feat">End-to-end project management</div></div><button class="btn-gold" onclick="goTo('contact')">Enquire Now</button></div>
+      <div class="svc-content"><span class="svc-num">01</span><h2 class="svc-title">House and Land Packages</h2><p class="svc-desc">We curate house and land packages combining prime Melbourne locations with thoughtfully designed homes, delivering exceptional value from day one.</p><div class="svc-feats"><div class="svc-feat">Access to exclusive land releases</div><div class="svc-feat">Trusted builder partnerships</div><div class="svc-feat">Fixed-price contracts available</div><div class="svc-feat">End-to-end project management</div></div><button class="btn-gold" ontouchend="goTo('contact')" onclick="goTo('contact')">Enquire Now</button></div>
     </div>
     <div class="svc-item rev reveal">
       <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1568605114967-8130f3a36994?q=80&w=900" alt="Building New Homes" class="svc-img" loading="lazy"></div>
-      <div class="svc-content"><span class="svc-num">02</span><h2 class="svc-title">Building New Homes</h2><p class="svc-desc">Guided end-to-end new home construction with trusted builders, tailored floor plans, and a seamless build experience from concept to keys.</p><div class="svc-feats"><div class="svc-feat">Custom and standard floor plans</div><div class="svc-feat">Budget planning and guidance</div><div class="svc-feat">Builder selection and vetting</div><div class="svc-feat">Construction milestone management</div></div><button class="btn-gold" onclick="goTo('contact')">Enquire Now</button></div>
+      <div class="svc-content"><span class="svc-num">02</span><h2 class="svc-title">Building New Homes</h2><p class="svc-desc">Guided end-to-end new home construction with trusted builders, tailored floor plans, and a seamless build experience from concept to keys.</p><div class="svc-feats"><div class="svc-feat">Custom and standard floor plans</div><div class="svc-feat">Budget planning and guidance</div><div class="svc-feat">Builder selection and vetting</div><div class="svc-feat">Construction milestone management</div></div><button class="btn-gold" ontouchend="goTo('contact')" onclick="goTo('contact')">Enquire Now</button></div>
     </div>
     <div class="svc-item reveal">
       <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?q=80&w=900" alt="Renovations" class="svc-img" loading="lazy"></div>
-      <div class="svc-content"><span class="svc-num">03</span><h2 class="svc-title">Renovations</h2><p class="svc-desc">Strategic property renovations that maximise value, modernise living spaces, and reflect your unique vision with precision and quality craftsmanship.</p><div class="svc-feats"><div class="svc-feat">Kitchen and bathroom specialists</div><div class="svc-feat">Structural renovation experience</div><div class="svc-feat">Value-adding renovation strategy</div><div class="svc-feat">Fully project-managed process</div></div><button class="btn-gold" onclick="goTo('contact')">Enquire Now</button></div>
+      <div class="svc-content"><span class="svc-num">03</span><h2 class="svc-title">Renovations</h2><p class="svc-desc">Strategic property renovations that maximise value, modernise living spaces, and reflect your unique vision with precision and quality craftsmanship.</p><div class="svc-feats"><div class="svc-feat">Kitchen and bathroom specialists</div><div class="svc-feat">Structural renovation experience</div><div class="svc-feat">Value-adding renovation strategy</div><div class="svc-feat">Fully project-managed process</div></div><button class="btn-gold" ontouchend="goTo('contact')" onclick="goTo('contact')">Enquire Now</button></div>
     </div>
     <div class="svc-item rev reveal">
       <div class="svc-img-wrap"><img src="https://images.unsplash.com/photo-1570129477492-45c003edd2be?q=80&w=900" alt="Extensions" class="svc-img" loading="lazy"></div>
-      <div class="svc-content"><span class="svc-num">04</span><h2 class="svc-title">Extensions</h2><p class="svc-desc">Thoughtfully designed home extensions that expand your living space seamlessly, blending new additions with your existing home's character.</p><div class="svc-feats"><div class="svc-feat">Ground and first floor extensions</div><div class="svc-feat">Council planning support</div><div class="svc-feat">Architectural design coordination</div><div class="svc-feat">Seamless integration with existing home</div></div><button class="btn-gold" onclick="goTo('contact')">Enquire Now</button></div>
+      <div class="svc-content"><span class="svc-num">04</span><h2 class="svc-title">Extensions</h2><p class="svc-desc">Thoughtfully designed home extensions that expand your living space seamlessly, blending new additions with your existing home's character.</p><div class="svc-feats"><div class="svc-feat">Ground and first floor extensions</div><div class="svc-feat">Council planning support</div><div class="svc-feat">Architectural design coordination</div><div class="svc-feat">Seamless integration with existing home</div></div><button class="btn-gold" ontouchend="goTo('contact')" onclick="goTo('contact')">Enquire Now</button></div>
     </div>
   </div>
   <div class="cta-strip">
     <h2 class="reveal">Ready to get <em>started?</em></h2>
     <p class="reveal d1">Book a free consultation and let us help you find the right solution for your property goals.</p>
     <div class="cta-btns reveal d2">
-      <button class="btn-gold" onclick="goTo('contact')">Book Consultation</button>
-      <button class="btn-white" onclick="goTo('properties')">View Properties</button>
+      <button class="btn-gold" ontouchend="goTo('contact')" onclick="goTo('contact')">Book Consultation</button>
+      <button class="btn-white" ontouchend="goTo('properties')" onclick="goTo('properties')">View Properties</button>
     </div>
   </div>
   
@@ -754,7 +756,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#3e5750585110535f50504e4c514e5b4c4a47594c514b4e7e59535f5752105d5153"><span class="__cf_email__" data-cfemail="91f8fff7febffcf0ffffe1e3fee1f4e3e5e8f6e3fee4e1d1f6fcf0f8fdbff2fefc">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -794,7 +796,7 @@ footer{background:#141414;padding:56px 5vw 24px}
   <div class="props-cta">
     <h2 class="reveal">Not seeing what you are <em>looking for?</em></h2>
     <p class="reveal d1">We have access to off-market listings and upcoming releases. Get in touch and let us find exactly what you need.</p>
-    <button class="btn-gold reveal d2" onclick="goTo('contact')">Contact Us Today</button>
+    <button class="btn-gold reveal d2" ontouchend="goTo('contact')" onclick="goTo('contact')">Contact Us Today</button>
   </div>
   
 <footer>
@@ -830,7 +832,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#b8d1d6ded796d5d9d6d6c8cad7c8ddcaccc1dfcad7cdc8f8dfd5d9d1d496dbd7d5"><span class="__cf_email__" data-cfemail="157c7b737a3b78747b7b65677a657067616c72677a6065557278747c793b767a78">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -881,7 +883,7 @@ footer{background:#141414;padding:56px 5vw 24px}
   <div class="testi-cta">
     <h2 class="reveal">Ready to <em>join them?</em></h2>
     <p class="reveal d1">Take the first step towards your property goals with a free, no-obligation consultation.</p>
-    <button class="btn-gold reveal d2" onclick="goTo('contact')">Book Your Free Consultation</button>
+    <button class="btn-gold reveal d2" ontouchend="goTo('contact')" onclick="goTo('contact')">Book Your Free Consultation</button>
   </div>
   
 <footer>
@@ -917,7 +919,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#4b22252d2465262a25253b39243b2e393f322c39243e3b0b2c262a222765282426"><span class="__cf_email__" data-cfemail="d1b8bfb7beffbcb0bfbfa1a3bea1b4a3a5a8b6a3bea4a191b6bcb0b8bdffb2bebc">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -949,7 +951,7 @@ footer{background:#141414;padding:56px 5vw 24px}
       <p class="contact-intro reveal d1">Book a free consultation or send us a message and we will get back to you within 24 hours.</p>
       <div class="cinfo reveal d2">
         <div class="cinfo-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M2 4a1 1 0 011-1h10a1 1 0 011 1v8a1 1 0 01-1 1H3a1 1 0 01-1-1V4z"/><path d="M2 4l6 5 6-5"/></svg></div>
-        <div><div class="cinfo-label">Email</div><a href="mailto:info.mannpropertygroup@gmail.com" class="cinfo-val">info.mannpropertygroup@gmail.com</a></div>
+        <div><div class="cinfo-label">Email</div><a href="/cdn-cgi/l/email-protection#9ff6f1f9f0b1f2fef1f1efedf0effaedebe6f8edf0eaefdff8f2fef6f3b1fcf0f2" class="cinfo-val"><span class="__cf_email__" data-cfemail="91f8fff7febffcf0ffffe1e3fee1f4e3e5e8f6e3fee4e1d1f6fcf0f8fdbff2fefc">[email&#160;protected]</span></a></div>
       </div>
       <div class="cinfo reveal d3">
         <div class="cinfo-icon"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M13.5 10.5l-2-2a1 1 0 00-1.4 0l-1 1C8 9 7 8 6.5 7l1-1a1 1 0 000-1.4l-2-2a1 1 0 00-1.4 0L3 3.7C2.5 4.2 2.5 5 3 5.5c1.5 2 3.5 4 5.5 5.5.5.4 1.3.4 1.8-.1l1.2-1.2a1 1 0 000-1.2z"/></svg></div>
@@ -1025,7 +1027,7 @@ footer{background:#141414;padding:56px 5vw 24px}
     <div class="footer-col">
       <div class="footer-col-title">Contact</div>
       <ul>
-        <li><a href="mailto:info.mannpropertygroup@gmail.com">info.mannpropertygroup@gmail.com</a></li>
+        <li><a href="/cdn-cgi/l/email-protection#96fff8f0f9b8fbf7f8f8e6e4f9e6f3e4e2eff1e4f9e3e6d6f1fbf7fffab8f5f9fb"><span class="__cf_email__" data-cfemail="99f0f7fff6b7f4f8f7f7e9ebf6e9fcebede0feebf6ece9d9fef4f8f0f5b7faf6f4">[email&#160;protected]</span></a></li>
         <li><a href="tel:0401050235">0401 050 235</a></li>
         <li><a onclick="goTo('contact')">Book a Consultation</a></li>
       </ul>
@@ -1065,31 +1067,28 @@ footer{background:#141414;padding:56px 5vw 24px}
   </button>
 </div>
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // ============================================================
 // PAGE ROUTER - single page app, no file navigation needed
 // ============================================================
 var currentPage = 'home';
+var menuOpen = false;
 
 function showPage(name) {
-  // Hide all pages
   document.querySelectorAll('.page').forEach(function(p) {
     p.classList.remove('active');
   });
-  // Show target page
   var target = document.getElementById('page-' + name);
   if (!target) return;
   target.classList.add('active');
   currentPage = name;
 
-  // Update nav active states
   document.querySelectorAll('.nav-links a').forEach(function(a) {
     a.classList.remove('active');
   });
   var navLink = document.getElementById('nl-' + name);
   if (navLink) navLink.classList.add('active');
 
-  // Nav style: transparent on home, solid on all others
   var nav = document.getElementById('mainNav');
   if (name === 'home') {
     nav.classList.remove('solid');
@@ -1097,15 +1096,19 @@ function showPage(name) {
     nav.classList.add('solid');
   }
 
-  // Scroll to top
   window.scrollTo(0, 0);
-
-  // Trigger reveal animations on new page
   setTimeout(triggerReveal, 80);
 }
 
-// goTo is the one function called everywhere (buttons, footer, mobile menu)
+// THE ONE AND ONLY goTo - handles both menu close and navigation
 function goTo(name) {
+  // Always close menu first if open
+  if (menuOpen) {
+    menuOpen = false;
+    document.getElementById('mobileMenu').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  // Always navigate
   showPage(name);
 }
 
@@ -1120,14 +1123,11 @@ window.addEventListener('scroll', function() {
 });
 
 // ============================================================
-// MOBILE MENU - fullscreen, no href links, pure JS navigation
+// MOBILE MENU TOGGLE
 // ============================================================
-var menuOpen = false;
-
 function toggleMenu() {
   menuOpen = !menuOpen;
   var menu = document.getElementById('mobileMenu');
-  var ham = document.getElementById('hamburger');
   if (menuOpen) {
     menu.classList.add('open');
     document.body.style.overflow = 'hidden';
@@ -1135,18 +1135,6 @@ function toggleMenu() {
     menu.classList.remove('open');
     document.body.style.overflow = '';
   }
-}
-
-// Called from mobile menu links
-function goTo(name) {
-  // Close menu if open
-  if (menuOpen) {
-    menuOpen = false;
-    document.getElementById('mobileMenu').classList.remove('open');
-    document.getElementById('hamburger').classList.remove('is-open');
-    document.body.style.overflow = '';
-  }
-  showPage(name);
 }
 
 // ============================================================
@@ -1188,35 +1176,4 @@ function waKey(e) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); 
 function waResize(el) { el.style.height = 'auto'; el.style.height = Math.min(el.scrollHeight, 84) + 'px'; }
 function waSend() {
   var inp = document.getElementById('waInput'), msg = inp.value.trim();
-  if (!msg) return;
-  document.getElementById('waTyping').classList.add('show');
-  inp.value = ''; inp.style.height = 'auto';
-  var full = 'Hi Mann Property Group, I found you on your website.\n\n' + msg;
-  setTimeout(function() {
-    document.getElementById('waTyping').classList.remove('show');
-    window.open('https://wa.me/61401050235?text=' + encodeURIComponent(full), '_blank');
-  }, 900);
-}
-document.addEventListener('click', function(e) {
-  var w = document.getElementById('wa-widget');
-  if (w && !w.contains(e.target)) {
-    document.getElementById('wa-panel').classList.remove('open');
-    document.getElementById('wa-bubble').classList.remove('open');
-  }
-});
-
-// ============================================================
-// CONTACT FORM
-// ============================================================
-function handleSubmit(e) {
-  e.preventDefault();
-  var btn = document.getElementById('submitBtn');
-  btn.textContent = 'Sending...'; btn.style.opacity = '0.7';
-  setTimeout(function() {
-    btn.textContent = 'Enquiry Sent!'; btn.style.background = 'var(--gold)'; btn.style.opacity = '1';
-    setTimeout(function() { btn.textContent = 'Send Enquiry'; btn.style.background = ''; }, 3000);
-  }, 1200);
-}
-</script>
-</body>
-</html>
+  if (!ms
