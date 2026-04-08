@@ -6,1425 +6,1011 @@
 <title>Dragstar — Australian Made Ethical Womenswear</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Montserrat:wght@200;300;400;500;600&display=swap" rel="stylesheet">
 <style>
-/* ===================== RESET & BASE ===================== */
-*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-html { scroll-behavior: smooth; font-size: 16px; }
-body {
-  font-family: 'Montserrat', sans-serif;
-  background: #080705;
-  color: #E8DFD0;
-  overflow-x: hidden;
-  cursor: none;
-}
-a { text-decoration: none; color: inherit; }
-button { cursor: none; font-family: inherit; }
-img { display: block; max-width: 100%; }
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box}
+html{scroll-behavior:smooth;font-size:16px}
+body{font-family:'Montserrat',sans-serif;background:#060504;color:#EAE1D2;overflow-x:hidden;cursor:none}
+a{text-decoration:none;color:inherit}
+button{cursor:none;font-family:inherit;border:none;outline:none}
+img{display:block;max-width:100%}
 
-/* ===================== CUSTOM CURSOR ===================== */
-.cursor {
-  position: fixed; top: 0; left: 0; z-index: 10000;
-  pointer-events: none;
-}
-.cursor-dot {
-  width: 8px; height: 8px; background: #C9A46A;
-  border-radius: 50%; position: absolute;
-  transform: translate(-50%, -50%);
-  transition: transform 0.1s;
-}
-.cursor-ring {
-  width: 36px; height: 36px;
-  border: 1px solid rgba(201,164,106,0.5);
-  border-radius: 50%; position: absolute;
-  transform: translate(-50%, -50%);
-  transition: width 0.3s, height 0.3s, border-color 0.3s, transform 0.15s;
-}
-body.hovering .cursor-ring {
-  width: 56px; height: 56px;
-  border-color: rgba(201,164,106,0.9);
-}
-body.hovering .cursor-dot { transform: translate(-50%, -50%) scale(1.5); }
-
-/* ===================== CSS VARIABLES ===================== */
-:root {
-  --gold: #C9A46A;
-  --gold-light: #E2C48A;
-  --gold-dim: rgba(201,164,106,0.35);
-  --bg: #080705;
-  --bg2: #100E0A;
-  --bg3: #181410;
-  --bg4: #201C16;
-  --cream: #E8DFD0;
-  --cream-dim: rgba(232,223,208,0.55);
-  --cream-faint: rgba(232,223,208,0.25);
-  --border: rgba(201,164,106,0.18);
-  --border-light: rgba(232,223,208,0.1);
-  --serif: 'Cormorant Garamond', Georgia, serif;
-  --sans: 'Montserrat', sans-serif;
+:root{
+  --gold:#C8A464;--gold2:#E4C88C;--gold3:rgba(200,164,100,0.3);
+  --bg:#060504;--bg2:#0E0B08;--bg3:#161210;--bg4:#1E1812;--bg5:#241E18;
+  --cream:#EAE1D2;--cdim:rgba(234,225,210,0.55);--cfaint:rgba(234,225,210,0.22);
+  --border:rgba(200,164,100,0.16);--borderl:rgba(234,225,210,0.08);
+  --serif:'Cormorant Garamond',Georgia,serif;--sans:'Montserrat',sans-serif;
 }
 
-/* ===================== NOISE OVERLAY ===================== */
-body::before {
-  content: '';
-  position: fixed; inset: 0; z-index: 9999;
-  pointer-events: none;
-  opacity: 0.025;
-  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
-  background-size: 200px;
-}
+/* ── SCROLLBAR ── */
+::-webkit-scrollbar{width:3px}
+::-webkit-scrollbar-track{background:var(--bg)}
+::-webkit-scrollbar-thumb{background:var(--gold3)}
+::-webkit-scrollbar-thumb:hover{background:var(--gold)}
 
-/* ===================== NAV ===================== */
-.nav {
-  position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
-  height: 72px;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 0 5%;
-  background: rgba(8,7,5,0.92);
-  backdrop-filter: blur(24px);
-  border-bottom: 1px solid var(--border);
-  transition: background 0.4s;
+/* ── NOISE GRAIN ── */
+body::after{
+  content:'';position:fixed;inset:0;z-index:9998;pointer-events:none;
+  opacity:0.03;
+  background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  background-size:256px;animation:grainShift 0.5s steps(1) infinite;
 }
-.nav.scrolled { background: rgba(8,7,5,0.98); }
-.nav-logo {
-  font-family: var(--serif);
-  font-size: 26px; font-weight: 400; letter-spacing: 0.18em;
-  color: var(--cream);
-  display: flex; align-items: center; gap: 2px;
-}
-.nav-logo-d { font-style: italic; color: var(--gold); }
-.nav-center {
-  display: flex; gap: 3rem; list-style: none;
-  position: absolute; left: 50%; transform: translateX(-50%);
-}
-.nav-center li a {
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500;
-  color: var(--cream-dim);
-  transition: color 0.3s;
-  padding-bottom: 3px;
-  border-bottom: 1px solid transparent;
-  transition: color 0.3s, border-color 0.3s;
-}
-.nav-center li a:hover { color: var(--gold); border-color: var(--gold-dim); }
-.nav-right { display: flex; align-items: center; gap: 20px; }
-.nav-icon {
-  width: 40px; height: 40px; border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-  transition: border-color 0.3s, background 0.3s;
-}
-.nav-icon:hover { border-color: var(--gold); background: rgba(201,164,106,0.08); }
-.nav-icon svg { width: 16px; height: 16px; stroke: var(--cream-dim); fill: none; stroke-width: 1.5; stroke-linecap: round; }
-.nav-icon:hover svg { stroke: var(--gold); }
-.nav-bag {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
-  color: var(--cream-dim); padding: 10px 18px;
-  border: 1px solid var(--border);
-  transition: all 0.3s;
-}
-.nav-bag:hover { color: var(--gold); border-color: var(--gold); }
-.hamburger { display: none; flex-direction: column; gap: 5px; padding: 8px; }
-.hamburger span { display: block; width: 22px; height: 1px; background: var(--cream); transition: all 0.3s; }
+@keyframes grainShift{0%{transform:translate(0,0)}20%{transform:translate(-2px,1px)}40%{transform:translate(1px,-2px)}60%{transform:translate(-1px,2px)}80%{transform:translate(2px,-1px)}100%{transform:translate(0,0)}}
 
-/* ===================== MOBILE NAV DRAWER ===================== */
-.nav-drawer {
-  position: fixed; top: 0; right: 0; bottom: 0; width: 300px; z-index: 1100;
-  background: var(--bg2);
-  border-left: 1px solid var(--border);
-  padding: 80px 40px 40px;
-  transform: translateX(100%);
-  transition: transform 0.4s cubic-bezier(0.77, 0, 0.175, 1);
-}
-.nav-drawer.open { transform: translateX(0); }
-.nav-drawer ul { list-style: none; }
-.nav-drawer ul li { border-bottom: 1px solid var(--border-light); }
-.nav-drawer ul li a {
-  display: block; padding: 18px 0;
-  font-family: var(--serif); font-size: 22px; font-weight: 400;
-  color: var(--cream); transition: color 0.3s;
-}
-.nav-drawer ul li a:hover { color: var(--gold); }
-.drawer-close {
-  position: absolute; top: 24px; right: 24px;
-  background: none; border: none; color: var(--cream-dim);
-  font-size: 24px; font-weight: 300; transition: color 0.3s;
-}
-.drawer-close:hover { color: var(--gold); }
-.drawer-overlay {
-  position: fixed; inset: 0; z-index: 1050;
-  background: rgba(0,0,0,0.7);
-  opacity: 0; pointer-events: none;
-  transition: opacity 0.4s;
-}
-.drawer-overlay.open { opacity: 1; pointer-events: all; }
+/* ── CUSTOM CURSOR ── */
+#cur,#cur2{position:fixed;top:0;left:0;pointer-events:none;z-index:99999;border-radius:50%}
+#cur{width:6px;height:6px;background:var(--gold);transform:translate(-50%,-50%);transition:transform .1s,width .3s,height .3s}
+#cur2{width:32px;height:32px;border:1px solid rgba(200,164,100,0.6);transform:translate(-50%,-50%);transition:width .4s,height .4s,border-color .4s}
+body.hov #cur{width:10px;height:10px;background:var(--gold2)}
+body.hov #cur2{width:52px;height:52px;border-color:var(--gold)}
+body.click #cur{width:4px;height:4px}
+body.click #cur2{width:16px;height:16px;border-color:var(--gold2)}
 
-/* ===================== HERO ===================== */
-.hero {
-  position: relative; height: 100vh; min-height: 700px;
-  display: flex; align-items: flex-end;
-  overflow: hidden;
+/* ── NAV ── */
+.nav{
+  position:fixed;top:0;left:0;right:0;z-index:1000;height:70px;
+  display:flex;align-items:center;justify-content:space-between;padding:0 5%;
+  transition:background .5s,backdrop-filter .5s;
 }
-/* HERO BG — layered CSS gradients, no external image needed */
-.hero-bg {
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 70% 80% at 75% 40%, rgba(40,28,12,0.95) 0%, transparent 70%),
-    radial-gradient(ellipse 100% 60% at 20% 100%, rgba(201,164,106,0.07) 0%, transparent 60%),
-    linear-gradient(160deg, #0e0a05 0%, #080705 40%, #0a0c08 100%);
-}
-/* ANIMATED GOLD PARTICLES */
-.hero-particles {
-  position: absolute; inset: 0; overflow: hidden;
-}
-.particle {
-  position: absolute; border-radius: 50%;
-  background: var(--gold);
-  animation: floatUp linear infinite;
-  opacity: 0;
-}
-@keyframes floatUp {
-  0% { transform: translateY(100vh) scale(0); opacity: 0; }
-  10% { opacity: 0.6; }
-  90% { opacity: 0.2; }
-  100% { transform: translateY(-20vh) scale(1); opacity: 0; }
-}
-/* HERO IMAGE — using dragstar CDN, with CSS fallback gradient */
-.hero-img-wrap {
-  position: absolute; inset: 0;
-  animation: heroZoomOut 14s ease-out forwards;
-}
-@keyframes heroZoomOut {
-  0% { transform: scale(1.18); filter: brightness(0) saturate(0); }
-  5% { filter: brightness(0.45) saturate(0.6); }
-  100% { transform: scale(1.0); filter: brightness(0.45) saturate(0.6); }
-}
-.hero-img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center 25%;
-}
-.hero-img-fallback {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, #1a1208 0%, #2a1e0e 30%, #1c1810 60%, #0e0c08 100%);
-}
-/* Decorative grid lines on hero */
-.hero-grid-lines {
-  position: absolute; inset: 0; pointer-events: none;
-  background-image:
-    linear-gradient(rgba(201,164,106,0.04) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(201,164,106,0.04) 1px, transparent 1px);
-  background-size: 80px 80px;
-  mask-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.5) 30%, rgba(0,0,0,0.5) 70%, transparent 100%);
-}
-.hero-vignette {
-  position: absolute; inset: 0;
-  background:
-    linear-gradient(to right, rgba(8,7,5,0.96) 0%, rgba(8,7,5,0.3) 55%, rgba(8,7,5,0.5) 100%),
-    linear-gradient(to top, rgba(8,7,5,1) 0%, transparent 35%);
-}
-.hero-content {
-  position: relative; z-index: 5;
-  padding: 0 5% 8vh;
-  max-width: 680px;
-}
-.hero-eyebrow {
-  display: flex; align-items: center; gap: 14px;
-  font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; font-weight: 500;
-  color: var(--gold); margin-bottom: 2rem;
-  opacity: 0; animation: slideRight 0.8s ease 0.4s forwards;
-}
-.hero-eyebrow-line { width: 40px; height: 1px; background: var(--gold); }
-.hero-h1 {
-  font-family: var(--serif);
-  font-size: clamp(3.5rem, 9vw, 8rem);
-  font-weight: 300; line-height: 0.92; letter-spacing: -0.02em;
-  color: var(--cream); margin-bottom: 2.5rem;
-  opacity: 0; animation: slideRight 0.9s ease 0.6s forwards;
-}
-.hero-h1 em { font-style: italic; color: var(--gold); display: block; }
-.hero-sub {
-  font-size: 13px; line-height: 1.9; color: var(--cream-dim);
-  font-weight: 300; max-width: 400px; margin-bottom: 3rem;
-  opacity: 0; animation: slideRight 0.8s ease 0.8s forwards;
-}
-.hero-actions {
-  display: flex; gap: 14px; flex-wrap: wrap;
-  opacity: 0; animation: slideRight 0.8s ease 1s forwards;
-}
-.btn-gold {
-  background: var(--gold); color: #080705; border: none;
-  padding: 16px 40px;
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
-  transition: background 0.3s, transform 0.3s, box-shadow 0.3s;
-  position: relative; overflow: hidden;
-}
-.btn-gold::after {
-  content: ''; position: absolute; inset: 0;
-  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
-  transform: translateX(-100%);
-  transition: transform 0.6s;
-}
-.btn-gold:hover::after { transform: translateX(100%); }
-.btn-gold:hover { background: var(--gold-light); transform: translateY(-3px); box-shadow: 0 20px 40px rgba(201,164,106,0.3); }
-.btn-ghost {
-  background: transparent; color: var(--cream);
-  border: 1px solid rgba(232,223,208,0.3);
-  padding: 16px 40px;
-  font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
-  transition: border-color 0.3s, color 0.3s, transform 0.3s;
-}
-.btn-ghost:hover { border-color: var(--gold); color: var(--gold); transform: translateY(-3px); }
-.hero-scroll {
-  position: absolute; bottom: 3rem; right: 5%;
-  display: flex; flex-direction: column; align-items: center; gap: 10px;
-  z-index: 5;
-  opacity: 0; animation: fadeIn 0.8s ease 1.5s forwards;
-}
-.hero-scroll-text {
-  font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--gold); writing-mode: vertical-rl;
-}
-.hero-scroll-track {
-  width: 1px; height: 80px;
-  background: var(--gold-dim); position: relative; overflow: hidden;
-}
-.hero-scroll-track::after {
-  content: ''; position: absolute; top: -100%;
-  width: 100%; height: 60%;
-  background: linear-gradient(to bottom, transparent, var(--gold), transparent);
-  animation: scrollFlow 2.5s ease-in-out infinite;
-}
-@keyframes scrollFlow { 0% { top: -100%; } 100% { top: 200%; } }
-.hero-corner-badge {
-  position: absolute; top: 100px; right: 5%; z-index: 5;
-  border: 1px solid var(--border);
-  padding: 20px 24px; text-align: center;
-  background: rgba(8,7,5,0.6); backdrop-filter: blur(10px);
-  opacity: 0; animation: fadeIn 0.8s ease 1.3s forwards;
-}
-.hero-badge-num {
-  font-family: var(--serif); font-size: 3rem; font-weight: 300;
-  color: var(--gold); line-height: 1;
-}
-.hero-badge-label {
-  font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: var(--cream-dim); margin-top: 4px;
-}
+.nav::after{content:'';position:absolute;bottom:0;left:5%;right:5%;height:1px;background:linear-gradient(to right,transparent,var(--border),transparent)}
+.nav.solid{background:rgba(6,5,4,0.95);backdrop-filter:blur(30px)}
+.nav-logo{font-family:var(--serif);font-size:24px;font-weight:300;letter-spacing:0.22em;color:var(--cream);position:relative;z-index:1}
+.nav-logo b{font-style:italic;font-weight:400;color:var(--gold)}
+.nav-links{display:flex;gap:2.5rem;list-style:none;position:absolute;left:50%;transform:translateX(-50%)}
+.nav-links a{font-size:9.5px;letter-spacing:0.22em;text-transform:uppercase;font-weight:500;color:var(--cdim);transition:color .3s;position:relative;padding-bottom:4px}
+.nav-links a::after{content:'';position:absolute;bottom:0;left:0;width:0;height:1px;background:var(--gold);transition:width .4s}
+.nav-links a:hover{color:var(--gold)}
+.nav-links a:hover::after{width:100%}
+.nav-r{display:flex;align-items:center;gap:14px}
+.nav-ico{width:38px;height:38px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;transition:border-color .3s,background .3s}
+.nav-ico:hover{border-color:var(--gold);background:rgba(200,164,100,0.06)}
+.nav-ico svg{width:15px;height:15px;stroke:var(--cdim);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+.nav-ico:hover svg{stroke:var(--gold)}
+.nav-bag{font-size:9px;letter-spacing:0.22em;text-transform:uppercase;color:var(--cdim);padding:9px 16px;border:1px solid var(--border);transition:all .3s}
+.nav-bag:hover{color:var(--gold);border-color:var(--gold);background:rgba(200,164,100,0.04)}
+.burger{display:none;flex-direction:column;gap:5px;padding:6px;cursor:none}
+.burger span{display:block;width:20px;height:1px;background:var(--cream);transition:all .3s}
 
-/* ===================== TICKER ===================== */
-.ticker {
-  background: var(--gold);
-  padding: 13px 0;
-  overflow: hidden; white-space: nowrap;
-}
-.ticker-track {
-  display: inline-flex; gap: 0;
-  animation: tickerRun 30s linear infinite;
-}
-.ticker-item {
-  display: inline-flex; align-items: center; gap: 0;
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase;
-  color: #080705; font-weight: 600; white-space: nowrap;
-}
-.ticker-sep {
-  display: inline-block; width: 4px; height: 4px;
-  background: rgba(8,7,5,0.3); border-radius: 50%;
-  margin: 0 2rem;
-}
-@keyframes tickerRun { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
+/* ── DRAWER ── */
+.drawer-bg{position:fixed;inset:0;z-index:1080;background:rgba(0,0,0,0);pointer-events:none;transition:background .4s}
+.drawer-bg.on{background:rgba(0,0,0,0.75);pointer-events:all}
+.drawer{position:fixed;top:0;right:0;bottom:0;width:280px;z-index:1090;background:var(--bg2);border-left:1px solid var(--border);padding:80px 36px 36px;transform:translateX(100%);transition:transform .45s cubic-bezier(.77,0,.175,1)}
+.drawer.on{transform:translateX(0)}
+.drawer-x{position:absolute;top:22px;right:22px;background:none;border:none;color:var(--cdim);font-size:20px;font-weight:200;line-height:1;transition:color .3s}
+.drawer-x:hover{color:var(--gold)}
+.drawer ul{list-style:none}
+.drawer ul li{border-bottom:1px solid var(--borderl)}
+.drawer ul li a{display:block;padding:16px 0;font-family:var(--serif);font-size:20px;font-weight:300;color:var(--cream);transition:color .3s,padding-left .3s}
+.drawer ul li a:hover{color:var(--gold);padding-left:8px}
 
-/* ===================== SECTIONS ===================== */
-.sec { padding: 8rem 5%; }
-.sec-eyebrow {
-  display: inline-flex; align-items: center; gap: 14px;
-  font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; font-weight: 500;
-  color: var(--gold); margin-bottom: 1.2rem;
-}
-.sec-eyebrow::before { content: ''; display: block; width: 28px; height: 1px; background: var(--gold); }
-.sec-title {
-  font-family: var(--serif); font-size: clamp(2.2rem, 5vw, 4rem);
-  font-weight: 300; line-height: 1.1; letter-spacing: -0.01em;
-  color: var(--cream);
-}
-.sec-title em { font-style: italic; color: var(--gold); }
-.sec-head { display: flex; align-items: flex-end; justify-content: space-between; gap: 1rem; margin-bottom: 4rem; flex-wrap: wrap; }
-.link-underline {
-  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 500;
-  color: var(--cream-faint);
-  border-bottom: 1px solid rgba(232,223,208,0.15);
-  padding-bottom: 3px;
-  transition: color 0.3s, border-color 0.3s;
-}
-.link-underline:hover { color: var(--gold); border-color: var(--gold); }
+/* ── HERO ── */
+.hero{position:relative;height:100vh;min-height:680px;display:flex;align-items:flex-end;overflow:hidden;perspective:1200px}
 
-/* ===================== PRODUCT GRID ===================== */
-.prod-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 3px;
-}
-.prod-card {
-  background: var(--bg3);
-  overflow: hidden; position: relative;
-  transition: transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.prod-card:hover { z-index: 10; }
-.prod-img-wrap {
-  aspect-ratio: 3/4; overflow: hidden; position: relative;
-  background: var(--bg4);
-}
-/* Product placeholder — beautiful SVG gradient background */
-.prod-placeholder {
-  position: absolute; inset: 0;
-  display: flex; flex-direction: column; align-items: center; justify-content: center;
-  gap: 16px;
-}
-.prod-placeholder-bg {
-  position: absolute; inset: 0;
-}
-/* Each product gets a unique gradient */
-.p1 .prod-placeholder-bg { background: linear-gradient(160deg, #1a1208 0%, #2e1f0d 50%, #1a150b 100%); }
-.p2 .prod-placeholder-bg { background: linear-gradient(160deg, #0e1218 0%, #161e2a 50%, #0d1015 100%); }
-.p3 .prod-placeholder-bg { background: linear-gradient(160deg, #120e18 0%, #1e1628 50%, #110d15 100%); }
-.p4 .prod-placeholder-bg { background: linear-gradient(160deg, #0e1810 0%, #142414 50%, #0d1510 100%); }
-.p5 .prod-placeholder-bg { background: linear-gradient(160deg, #18120e 0%, #281e14 50%, #18140e 100%); }
-.p6 .prod-placeholder-bg { background: linear-gradient(160deg, #100e18 0%, #18142c 50%, #0d0c18 100%); }
-.p7 .prod-placeholder-bg { background: linear-gradient(160deg, #180e0e 0%, #28161a 50%, #180e10 100%); }
-.p8 .prod-placeholder-bg { background: linear-gradient(160deg, #161210 0%, #241e18 50%, #141010 100%); }
-.prod-placeholder-icon {
-  position: relative; z-index: 1;
-  width: 60px; height: 60px;
-  border: 1px solid var(--border);
-  display: flex; align-items: center; justify-content: center;
-}
-.prod-placeholder-icon svg { width: 28px; height: 28px; stroke: var(--gold-dim); fill: none; stroke-width: 1; }
-.prod-placeholder-text {
-  position: relative; z-index: 1;
-  font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase;
-  color: var(--cream-faint);
-}
-/* When real images load */
-.prod-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.6s;
-  filter: brightness(0.88) saturate(0.9);
-}
-.prod-card:hover .prod-img { transform: scale(1.07); filter: brightness(0.7) saturate(0.8); }
-.prod-badge {
-  position: absolute; top: 14px; left: 14px; z-index: 5;
-  font-size: 8px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
-  padding: 5px 12px;
-}
-.badge-n { background: var(--gold); color: #080705; }
-.badge-o { background: var(--bg); color: var(--gold); border: 1px solid var(--gold); }
-.badge-s { background: #8B1F1F; color: #fff; }
-.prod-hover-panel {
-  position: absolute; bottom: 0; left: 0; right: 0; z-index: 6;
-  padding: 20px;
-  background: linear-gradient(to top, rgba(8,7,5,0.97) 0%, rgba(8,7,5,0.5) 100%);
-  transform: translateY(100%);
-  transition: transform 0.4s cubic-bezier(0.25,0.46,0.45,0.94);
-}
-.prod-card:hover .prod-hover-panel { transform: translateY(0); }
-.prod-quick-btn {
-  width: 100%; padding: 13px;
-  background: var(--gold); color: #080705; border: none;
-  font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
-  transition: background 0.3s;
-}
-.prod-quick-btn:hover { background: var(--gold-light); }
-.prod-info { padding: 18px 18px 22px; background: var(--bg3); }
-.prod-name { font-family: var(--serif); font-size: 15px; font-weight: 400; color: var(--cream); line-height: 1.4; margin-bottom: 6px; }
-.prod-price { font-size: 11px; color: var(--gold); letter-spacing: 0.08em; }
-.prod-price-was { text-decoration: line-through; color: var(--cream-faint); margin-right: 8px; }
+/* 3D SCENE */
+.hero-scene{position:absolute;inset:0;transform-style:preserve-3d}
 
-/* ===================== STORY SECTION ===================== */
-.story-section {
-  display: grid; grid-template-columns: 1fr 1fr;
-  min-height: 600px;
-  background: var(--bg2);
-}
-.story-img-col {
-  position: relative; overflow: hidden;
-  background: var(--bg3);
-  min-height: 500px;
-}
-.story-img-bg {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, #1e1508 0%, #2a1e0e 40%, #181410 70%, #100e0a 100%);
-}
-/* Decorative abstract shape */
-.story-img-bg::after {
-  content: '';
-  position: absolute;
-  width: 400px; height: 400px;
-  border: 1px solid rgba(201,164,106,0.12);
-  border-radius: 50%;
-  top: 50%; left: 50%;
-  transform: translate(-50%, -50%);
-  box-shadow: 0 0 0 60px rgba(201,164,106,0.04), 0 0 0 120px rgba(201,164,106,0.02);
-}
-.story-img-inner {
-  position: absolute; inset: 0;
-}
-.story-img-inner img {
-  width: 100%; height: 100%; object-fit: cover; object-position: center top;
-  filter: brightness(0.75) saturate(0.8);
-  transition: transform 8s ease;
-}
-.story-section:hover .story-img-inner img { transform: scale(1.04); }
-.story-img-overlay {
-  position: absolute; inset: 0;
-  background: linear-gradient(to right, transparent 60%, var(--bg2) 100%);
-}
-.story-year-badge {
-  position: absolute; bottom: 40px; left: 40px; z-index: 2;
-  border: 1px solid var(--border);
-  padding: 20px 28px;
-  background: rgba(8,7,5,0.8); backdrop-filter: blur(10px);
-}
-.story-year { font-family: var(--serif); font-size: 3.5rem; font-weight: 300; color: var(--gold); line-height: 1; }
-.story-year-sub { font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--cream-dim); margin-top: 6px; }
-.story-text-col {
-  padding: 7rem 6%;
-  display: flex; flex-direction: column; justify-content: center;
-  position: relative; overflow: hidden;
-}
-.story-text-col::before {
-  content: 'DRAGSTAR';
-  position: absolute; bottom: -3rem; right: -2rem;
-  font-family: var(--serif); font-size: 14rem; font-weight: 300;
-  color: rgba(201,164,106,0.03); line-height: 1;
-  pointer-events: none; user-select: none;
-}
-.story-body {
-  font-size: 14px; line-height: 2; color: var(--cream-dim);
-  font-weight: 300; margin: 1.5rem 0 3rem; max-width: 440px;
-}
-.story-stats { display: flex; gap: 3rem; margin-bottom: 3rem; }
-.s-stat-n { font-family: var(--serif); font-size: 3rem; font-weight: 300; color: var(--gold); line-height: 1; }
-.s-stat-l { font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--cream-faint); margin-top: 6px; }
+/* BACKGROUND layers */
+.hero-far{position:absolute;inset:-10%;background:radial-gradient(ellipse 90% 70% at 65% 35%,#1c1208 0%,#060504 70%);animation:heroFarIn 2.5s ease-out forwards}
+@keyframes heroFarIn{from{transform:translateZ(-60px) scale(1.08)}to{transform:translateZ(0px) scale(1)}}
 
-/* ===================== CATEGORIES ===================== */
-.cat-grid {
-  display: grid; grid-template-columns: 1.4fr 1fr 1fr;
-  gap: 3px; height: 580px;
+.hero-img-layer{
+  position:absolute;inset:0;
+  animation:heroImgIn 3s cubic-bezier(.16,1,.3,1) forwards;
+  transform-origin:center center;
 }
-.cat-panel {
-  position: relative; overflow: hidden;
-  background: var(--bg3);
+@keyframes heroImgIn{
+  0%{transform:scale(1.25) translateZ(0);filter:brightness(0) saturate(0)}
+  8%{filter:brightness(0.5) saturate(0.7)}
+  100%{transform:scale(1.0) translateZ(0);filter:brightness(0.45) saturate(0.75)}
 }
-.cat-bg { position: absolute; inset: 0; }
-.cat-c1 .cat-bg { background: linear-gradient(160deg, #1e1810 0%, #302410 40%, #1a1410 100%); }
-.cat-c2 .cat-bg { background: linear-gradient(160deg, #0e1018 0%, #161824 40%, #0e1018 100%); }
-.cat-c3 .cat-bg { background: linear-gradient(160deg, #10180e 0%, #182418 40%, #101810 100%); }
-.cat-bg-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover; object-position: center;
-  filter: brightness(0.55) saturate(0.7);
-  transition: transform 0.8s cubic-bezier(0.25,0.46,0.45,0.94), filter 0.5s;
-}
-.cat-panel:hover .cat-bg-img { transform: scale(1.06); filter: brightness(0.4) saturate(0.6); }
-.cat-overlay { position: absolute; inset: 0; background: linear-gradient(to top, rgba(8,7,5,0.88) 0%, rgba(8,7,5,0.1) 55%); }
-.cat-decor {
-  position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
-  width: 140px; height: 140px;
-  border: 1px solid rgba(201,164,106,0.12); border-radius: 50%;
-  transition: width 0.4s, height 0.4s, opacity 0.4s;
-  opacity: 0.6;
-}
-.cat-panel:hover .cat-decor { width: 180px; height: 180px; opacity: 0.3; }
-.cat-content {
-  position: absolute; bottom: 0; left: 0; right: 0;
-  padding: 2.5rem;
-}
-.cat-label {
-  font-family: var(--serif); font-size: clamp(1.6rem, 3vw, 2.4rem);
-  font-weight: 300; color: var(--cream); line-height: 1.2; margin-bottom: 8px;
-}
-.cat-cta {
-  font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; font-weight: 500;
-  color: var(--gold);
-  display: inline-flex; align-items: center; gap: 10px;
-  transform: translateY(8px); opacity: 0;
-  transition: transform 0.4s, opacity 0.4s;
-}
-.cat-cta::after { content: ''; display: block; width: 0; height: 1px; background: var(--gold); transition: width 0.4s; }
-.cat-panel:hover .cat-cta { transform: translateY(0); opacity: 1; }
-.cat-panel:hover .cat-cta::after { width: 30px; }
+.hero-img-layer img{width:100%;height:100%;object-fit:cover;object-position:60% 25%}
+.hero-img-fallback{position:absolute;inset:0;background:linear-gradient(145deg,#1e1508 0%,#2c1e0e 35%,#181410 65%,#0c0a06 100%)}
 
-/* ===================== ETHOS PILLARS ===================== */
-.ethos-section {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  border-bottom: 1px solid var(--border);
-  padding: 7rem 5%;
-}
-.ethos-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-top: 5rem; }
-.ethos-card {
-  background: var(--bg3); padding: 3rem 2.5rem;
-  border-top: 1px solid var(--border);
-  position: relative; overflow: hidden;
-  transition: background 0.4s;
-}
-.ethos-card:hover { background: var(--bg4); }
-.ethos-card::before {
-  content: ''; position: absolute; top: 0; left: 0;
-  width: 0; height: 2px; background: var(--gold);
-  transition: width 0.5s;
-}
-.ethos-card:hover::before { width: 100%; }
-.ethos-num {
-  font-family: var(--serif); font-size: 5rem; font-weight: 300;
-  color: rgba(201,164,106,0.12); line-height: 1;
-  margin-bottom: 1.5rem;
-  transition: color 0.4s;
-}
-.ethos-card:hover .ethos-num { color: rgba(201,164,106,0.25); }
-.ethos-title {
-  font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 500;
-  color: var(--cream); margin-bottom: 1rem;
-}
-.ethos-body { font-size: 13px; line-height: 1.8; color: var(--cream-faint); font-weight: 300; }
+/* DEPTH LAYERS for parallax */
+.hero-mid{position:absolute;inset:0;background:linear-gradient(to right,rgba(6,5,4,.96) 0%,rgba(6,5,4,.22) 52%,rgba(6,5,4,.55) 100%);will-change:transform}
+.hero-vbot{position:absolute;bottom:0;left:0;right:0;height:40%;background:linear-gradient(to top,#060504,transparent)}
+.hero-vtop{position:absolute;top:0;left:0;right:0;height:20%;background:linear-gradient(to bottom,rgba(6,5,4,.6),transparent)}
 
-/* ===================== FEATURE PRODUCT ===================== */
-.feature-section {
-  display: grid; grid-template-columns: 1fr 1fr;
-  min-height: 650px;
-}
-.feature-img-col {
-  position: relative; overflow: hidden;
-  background: var(--bg3);
-}
-.feature-img-bg {
-  position: absolute; inset: 0;
-  background: linear-gradient(135deg, #18120e, #281e14);
-}
-.feature-img-col img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.8) saturate(0.85);
-  transition: transform 8s ease;
-}
-.feature-img-col:hover img { transform: scale(1.04); }
-.feature-img-badge {
-  position: absolute; top: 30px; right: 30px; z-index: 2;
-  background: #8B1F1F; color: #fff;
-  font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; font-weight: 600;
-  padding: 8px 18px;
-}
-.feature-text-col {
-  background: var(--bg2); padding: 6rem 5%;
-  display: flex; flex-direction: column; justify-content: center;
-}
-.feature-name { font-family: var(--serif); font-size: clamp(2rem, 4vw, 3rem); font-weight: 300; color: var(--cream); margin: 1.5rem 0 1rem; line-height: 1.15; }
-.feature-price-row { display: flex; align-items: baseline; gap: 16px; margin-bottom: 2rem; }
-.feature-price { font-family: var(--serif); font-size: 2.2rem; font-weight: 300; color: var(--gold); }
-.feature-was { font-size: 12px; color: var(--cream-faint); text-decoration: line-through; }
-.feature-desc { font-size: 13px; line-height: 1.9; color: var(--cream-dim); font-weight: 300; max-width: 360px; margin-bottom: 2.5rem; }
-.sizes-label { font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--cream-faint); margin-bottom: 12px; }
-.sizes-row { display: flex; gap: 8px; margin-bottom: 2.5rem; flex-wrap: wrap; }
-.size-opt {
-  width: 46px; height: 46px; border: 1px solid var(--border-light);
-  background: none; color: var(--cream-dim); font-size: 11px;
-  font-family: var(--sans); font-weight: 300;
-  transition: all 0.3s;
-}
-.size-opt:hover { border-color: var(--gold); color: var(--gold); }
-.size-opt.active { border-color: var(--gold); background: var(--gold); color: #080705; }
-.feature-materials { display: flex; gap: 2rem; margin-bottom: 3rem; }
-.mat-item { display: flex; align-items: center; gap: 10px; }
-.mat-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--gold); opacity: 0.5; }
-.mat-text { font-size: 11px; color: var(--cream-faint); letter-spacing: 0.05em; }
+/* 3D GRID LINES */
+.hero-grid{position:absolute;inset:0;pointer-events:none;overflow:hidden}
+.hero-grid svg{width:100%;height:100%;opacity:.06}
 
-/* ===================== INSTAGRAM STRIP ===================== */
-.gram-section { padding: 6rem 5%; background: var(--bg); }
-.gram-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 3px; margin-top: 3rem; }
-.gram-item {
-  aspect-ratio: 1/1; overflow: hidden;
-  position: relative; background: var(--bg3);
-}
-.gram-placeholder {
-  position: absolute; inset: 0;
-  display: flex; align-items: center; justify-content: center;
-}
-.gram-item-img {
-  position: absolute; inset: 0;
-  width: 100%; height: 100%; object-fit: cover;
-  filter: brightness(0.8) saturate(0.8);
-  transition: transform 0.6s ease, filter 0.4s;
-}
-.gram-item:hover .gram-item-img { transform: scale(1.08); filter: brightness(0.6) saturate(1); }
-.gram-hover { position: absolute; inset: 0; background: rgba(8,7,5,0.5); opacity: 0; transition: opacity 0.3s; display: flex; align-items: center; justify-content: center; }
-.gram-item:hover .gram-hover { opacity: 1; }
-.gram-hover-text { font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold); }
+/* FLOATING ORBS */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat ease-in-out infinite}
+.orb1{width:500px;height:500px;background:rgba(200,164,100,0.07);top:-10%;right:-5%;animation-duration:18s;animation-delay:0s}
+.orb2{width:300px;height:300px;background:rgba(200,164,100,0.05);bottom:5%;left:5%;animation-duration:14s;animation-delay:-6s}
+.orb3{width:200px;height:200px;background:rgba(180,140,80,0.06);top:30%;left:30%;animation-duration:22s;animation-delay:-10s}
+@keyframes orbFloat{0%,100%{transform:translate(0,0) scale(1)}33%{transform:translate(20px,-30px) scale(1.05)}66%{transform:translate(-15px,20px) scale(0.97)}}
 
-/* ===================== NEWSLETTER ===================== */
-.nl-section {
-  padding: 9rem 5%;
-  background: var(--bg2);
-  text-align: center;
-  position: relative; overflow: hidden;
-}
-.nl-section::before {
-  content: '';
-  position: absolute; inset: 0;
-  background:
-    radial-gradient(ellipse 80% 60% at 50% 50%, rgba(201,164,106,0.05) 0%, transparent 70%);
-}
-.nl-title { font-family: var(--serif); font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 300; color: var(--cream); margin-bottom: 1rem; position: relative; z-index: 1; }
-.nl-title em { font-style: italic; color: var(--gold); }
-.nl-sub { font-size: 13px; color: var(--cream-dim); font-weight: 300; margin-bottom: 3rem; position: relative; z-index: 1; }
-.nl-form {
-  display: flex; max-width: 520px; margin: 0 auto;
-  border: 1px solid var(--border);
-  position: relative; z-index: 1;
-  transition: border-color 0.3s;
-}
-.nl-form:focus-within { border-color: var(--gold); }
-.nl-input {
-  flex: 1; background: transparent; border: none; outline: none;
-  padding: 18px 22px; font-size: 13px; color: var(--cream); font-family: var(--sans); font-weight: 300;
-}
-.nl-input::placeholder { color: var(--cream-faint); }
-.nl-btn {
-  background: var(--gold); color: #080705; border: none;
-  padding: 18px 30px; font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; font-weight: 600;
-  transition: background 0.3s;
-}
-.nl-btn:hover { background: var(--gold-light); }
-.nl-promise { font-size: 10px; color: var(--cream-faint); margin-top: 16px; letter-spacing: 0.05em; position: relative; z-index: 1; }
+/* HERO PARTICLES CANVAS */
+#heroCanvas{position:absolute;inset:0;pointer-events:none;z-index:2}
 
-/* ===================== FOOTER ===================== */
-footer {
-  background: var(--bg2);
-  border-top: 1px solid var(--border);
-  padding: 7rem 5% 3rem;
-}
-.footer-top { display: grid; grid-template-columns: 2fr 1fr 1fr 1.4fr; gap: 5rem; margin-bottom: 6rem; }
-.footer-logo {
-  font-family: var(--serif); font-size: 30px; font-weight: 300; letter-spacing: 0.2em;
-  color: var(--cream); margin-bottom: 1.5rem;
-}
-.footer-logo span { font-style: italic; color: var(--gold); }
-.footer-tagline {
-  font-size: 12px; line-height: 1.8; color: var(--cream-faint); font-weight: 300;
-  max-width: 280px; margin-bottom: 2rem;
-}
-.footer-addr { font-size: 12px; line-height: 2; color: var(--cream-faint); font-weight: 300; }
-.footer-addr .highlight { color: var(--gold); }
-.footer-col-h {
-  font-size: 9px; letter-spacing: 0.28em; text-transform: uppercase; font-weight: 600;
-  color: rgba(201,164,106,0.6); margin-bottom: 1.8rem;
-}
-.footer-links { display: flex; flex-direction: column; gap: 0; }
-.footer-links a {
-  font-size: 13px; color: var(--cream-faint); font-weight: 300;
-  padding: 9px 0;
-  border-bottom: 1px solid rgba(232,223,208,0.06);
-  transition: color 0.3s, padding-left 0.3s;
-}
-.footer-links a:hover { color: var(--gold); padding-left: 6px; }
-.footer-hours-row {
-  display: flex; justify-content: space-between;
-  font-size: 12px; color: var(--cream-faint); font-weight: 300;
-  padding: 9px 0; border-bottom: 1px solid rgba(232,223,208,0.06);
-}
-.footer-hours-row .day { color: rgba(232,223,208,0.6); }
-.footer-divider { border: none; border-top: 1px solid var(--border); margin: 0 0 2.5rem; }
-.footer-bottom {
-  display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1.5rem;
-}
-.footer-copy { font-size: 11px; color: rgba(232,223,208,0.2); font-weight: 300; }
-.footer-sister { font-size: 11px; color: var(--cream-faint); font-weight: 300; }
-.footer-sister a { color: var(--gold); transition: opacity 0.3s; }
-.footer-sister a:hover { opacity: 0.7; }
-.footer-payments { display: flex; gap: 8px; }
-.pay-chip {
-  border: 1px solid rgba(201,164,106,0.15);
-  padding: 5px 12px; font-size: 10px;
-  color: rgba(232,223,208,0.3); letter-spacing: 0.05em;
-}
-.footer-ack {
-  font-size: 11px; color: rgba(232,223,208,0.18); font-weight: 300; font-style: italic;
-  margin-top: 1.5rem; line-height: 1.7; max-width: 600px;
-}
+/* HERO CONTENT */
+.hero-c{position:relative;z-index:10;padding:0 5% 9vh;max-width:700px;transform-style:preserve-3d}
+.hero-tag{display:flex;align-items:center;gap:14px;font-size:9px;letter-spacing:.35em;text-transform:uppercase;font-weight:500;color:var(--gold);margin-bottom:2rem;opacity:0;animation:rUp .9s ease .3s forwards}
+.hero-tag-line{width:36px;height:1px;background:var(--gold)}
+.hero-h1{font-family:var(--serif);font-size:clamp(3.8rem,10vw,8.5rem);font-weight:300;line-height:.9;letter-spacing:-.025em;color:var(--cream);margin-bottom:2.5rem;opacity:0;animation:rUp .9s ease .55s forwards}
+.hero-h1 em{font-style:italic;color:var(--gold);display:block;font-size:.88em;padding-left:.12em}
+.hero-sub{font-size:13px;line-height:1.95;color:var(--cdim);font-weight:300;max-width:380px;margin-bottom:3rem;opacity:0;animation:rUp .9s ease .75s forwards}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap;opacity:0;animation:rUp .9s ease .95s forwards}
 
-/* ===================== ANIMATIONS ===================== */
-@keyframes slideRight { from { opacity: 0; transform: translateX(-30px); } to { opacity: 1; transform: translateX(0); } }
-@keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-.reveal { opacity: 0; transform: translateY(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.reveal.vis { opacity: 1; transform: translateY(0); }
-.reveal-left { opacity: 0; transform: translateX(-40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.reveal-left.vis { opacity: 1; transform: translateX(0); }
-.reveal-right { opacity: 0; transform: translateX(40px); transition: opacity 0.9s ease, transform 0.9s ease; }
-.reveal-right.vis { opacity: 1; transform: translateX(0); }
+/* MAGNETIC BUTTON */
+.btn-mag{position:relative;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.btn-gold{background:var(--gold);color:#060504;padding:16px 44px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600}
+.btn-ghost{background:transparent;color:var(--cream);border:1px solid rgba(234,225,210,.28);padding:16px 44px;font-size:9.5px;letter-spacing:.24em;text-transform:uppercase;font-weight:600;transition:border-color .3s,color .3s}
+.btn-ghost:hover{border-color:var(--gold);color:var(--gold)}
+.btn-shine{position:absolute;inset:0;background:linear-gradient(105deg,transparent 30%,rgba(255,255,255,.22) 50%,transparent 70%);transform:translateX(-100%);transition:transform .7s}
+.btn-gold:hover .btn-shine{transform:translateX(100%)}
+.btn-gold:hover{background:var(--gold2);transform:translateY(-3px);box-shadow:0 24px 48px rgba(200,164,100,.28)}
 
-/* ===================== SCROLLBAR ===================== */
-::-webkit-scrollbar { width: 4px; }
-::-webkit-scrollbar-track { background: var(--bg); }
-::-webkit-scrollbar-thumb { background: var(--gold-dim); }
-::-webkit-scrollbar-thumb:hover { background: var(--gold); }
+/* HERO SCROLL */
+.hero-scroll{position:absolute;bottom:2.5rem;right:5%;z-index:10;display:flex;flex-direction:column;align-items:center;gap:8px;opacity:0;animation:fadeIn .8s ease 1.8s forwards}
+.h-scroll-text{font-size:7.5px;letter-spacing:.35em;text-transform:uppercase;color:rgba(200,164,100,.6);writing-mode:vertical-rl}
+.h-scroll-track{width:1px;height:72px;background:rgba(200,164,100,.18);overflow:hidden;position:relative}
+.h-scroll-track::after{content:'';position:absolute;top:-100%;width:100%;height:60%;background:linear-gradient(to bottom,transparent,var(--gold),transparent);animation:scrollDrop 2.8s ease-in-out infinite}
+@keyframes scrollDrop{0%{top:-100%}100%{top:220%}}
 
-/* ===================== RESPONSIVE ===================== */
-@media (max-width: 1100px) {
-  .prod-grid { grid-template-columns: repeat(3, 1fr); }
-  .cat-grid { grid-template-columns: 1fr 1fr; height: auto; }
-  .cat-c3 { display: none; }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 3rem; }
+/* HERO BADGE */
+.hero-badge{position:absolute;top:108px;right:5%;z-index:10;border:1px solid var(--border);padding:18px 22px;text-align:center;background:rgba(6,5,4,.65);backdrop-filter:blur(18px);opacity:0;animation:fadeIn .8s ease 1.6s forwards;transform-style:preserve-3d;transition:transform .4s}
+.hb-n{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--gold);line-height:1}
+.hb-l{font-size:7.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--cdim);margin-top:4px}
+
+/* ── TICKER ── */
+.ticker{background:var(--gold);padding:11px 0;overflow:hidden;white-space:nowrap;position:relative}
+.ticker::before,.ticker::after{content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2}
+.ticker::before{left:0;background:linear-gradient(to right,var(--gold),transparent)}
+.ticker::after{right:0;background:linear-gradient(to left,var(--gold),transparent)}
+.tick-track{display:inline-flex;animation:tickRun 35s linear infinite}
+.tick-item{display:inline-flex;align-items:center;gap:0;font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:#060504;white-space:nowrap}
+.tick-dot{display:inline-block;width:3px;height:3px;background:rgba(6,5,4,.35);border-radius:50%;margin:0 2rem}
+@keyframes tickRun{0%{transform:translateX(0)}100%{transform:translateX(-50%)}}
+
+/* ── SECTIONS ── */
+.sec{padding:8rem 5%}
+.eyebrow{display:inline-flex;align-items:center;gap:12px;font-size:8.5px;letter-spacing:.32em;text-transform:uppercase;font-weight:500;color:var(--gold);margin-bottom:1rem}
+.eyebrow::before{content:'';display:block;width:24px;height:1px;background:var(--gold)}
+.sec-title{font-family:var(--serif);font-size:clamp(2.2rem,5vw,4rem);font-weight:300;line-height:1.1;color:var(--cream)}
+.sec-title em{font-style:italic;color:var(--gold)}
+.sec-head{display:flex;align-items:flex-end;justify-content:space-between;gap:1rem;margin-bottom:3.5rem;flex-wrap:wrap}
+.a-more{font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:500;color:var(--cfaint);border-bottom:1px solid rgba(234,225,210,.12);padding-bottom:3px;transition:color .3s,border-color .3s}
+.a-more:hover{color:var(--gold);border-color:var(--gold)}
+
+/* ── 3D PRODUCT CARDS ── */
+.prod-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:3px}
+.prod-card{background:var(--bg3);overflow:hidden;position:relative;transform-style:preserve-3d;will-change:transform;transition:box-shadow .4s}
+.prod-card:hover{box-shadow:0 40px 80px rgba(0,0,0,.6),0 0 0 1px rgba(200,164,100,.15)}
+.prod-img-wrap{aspect-ratio:3/4;overflow:hidden;position:relative;background:var(--bg4)}
+
+/* Placeholder */
+.pp{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px}
+.pp-bg{position:absolute;inset:0}
+.c1 .pp-bg{background:linear-gradient(150deg,#1c130a,#301f0e,#1a1409)}
+.c2 .pp-bg{background:linear-gradient(150deg,#0d1219,#14192a,#0d1016)}
+.c3 .pp-bg{background:linear-gradient(150deg,#11101a,#1c1530,#100d18)}
+.c4 .pp-bg{background:linear-gradient(150deg,#0d1910,#132515,#0d160e)}
+.c5 .pp-bg{background:linear-gradient(150deg,#1a1208,#2a1e10,#181409)}
+.c6 .pp-bg{background:linear-gradient(150deg,#0f0e1c,#17152e,#0e0c1a)}
+.c7 .pp-bg{background:linear-gradient(150deg,#1c0e0e,#2a1420,#180d10)}
+.c8 .pp-bg{background:linear-gradient(150deg,#151210,#221c17,#121010)}
+.pp-ico{position:relative;z-index:1;width:56px;height:56px;border:1px solid var(--border);display:flex;align-items:center;justify-content:center}
+.pp-ico svg{width:26px;height:26px;stroke:rgba(200,164,100,.25);fill:none;stroke-width:1}
+.pp-txt{position:relative;z-index:1;font-size:7.5px;letter-spacing:.3em;text-transform:uppercase;color:var(--cfaint)}
+
+/* Real image */
+.pi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:transform .9s cubic-bezier(.25,.46,.45,.94),filter .6s;filter:brightness(.85) saturate(.88)}
+.prod-card:hover .pi{transform:scale(1.08);filter:brightness(.72) saturate(.82)}
+
+/* 3D TILT OVERLAY — subtle highlight */
+.prod-tilt-shine{position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle at 50% 50%,rgba(255,255,255,.06) 0%,transparent 60%);opacity:0;transition:opacity .4s;z-index:3}
+.prod-card:hover .prod-tilt-shine{opacity:1}
+
+.p-badge{position:absolute;top:12px;left:12px;z-index:5;font-size:7.5px;letter-spacing:.18em;text-transform:uppercase;font-weight:600;padding:4px 11px}
+.bn{background:var(--gold);color:#060504}
+.bo{background:var(--bg);color:var(--gold);border:1px solid var(--gold)}
+.bs{background:#7a1c1c;color:#fff}
+
+.prod-hover-panel{position:absolute;bottom:0;left:0;right:0;z-index:6;padding:16px;background:linear-gradient(to top,rgba(6,5,4,.98) 0%,rgba(6,5,4,.4) 100%);transform:translateY(100%);transition:transform .4s cubic-bezier(.25,.46,.45,.94)}
+.prod-card:hover .prod-hover-panel{transform:translateY(0)}
+.pqb{width:100%;padding:12px;background:var(--gold);color:#060504;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;transition:background .3s}
+.pqb:hover{background:var(--gold2)}
+.p-info{padding:16px 16px 20px;background:var(--bg3)}
+.p-name{font-family:var(--serif);font-size:14.5px;font-weight:400;color:var(--cream);line-height:1.4;margin-bottom:5px}
+.p-price{font-size:10.5px;color:var(--gold);letter-spacing:.08em}
+
+/* ── STORY (3D CARD SPLIT) ── */
+.story{display:grid;grid-template-columns:1fr 1fr;min-height:600px;background:var(--bg2);perspective:1600px}
+.story-img{position:relative;overflow:hidden;background:var(--bg3)}
+.story-img-inner{position:absolute;inset:0;transition:transform 8s ease}
+.story:hover .story-img-inner{transform:scale(1.04)}
+.story-img-inner img{width:100%;height:100%;object-fit:cover;object-position:center top;filter:brightness(.72) saturate(.8)}
+.story-img-fb{position:absolute;inset:0;background:linear-gradient(135deg,#1e1508,#2e200e,#181410)}
+.story-img-ov{position:absolute;inset:0;background:linear-gradient(to right,transparent 58%,var(--bg2) 100%)}
+.story-badge{position:absolute;bottom:36px;left:36px;z-index:2;border:1px solid var(--border);padding:18px 24px;background:rgba(6,5,4,.82);backdrop-filter:blur(14px)}
+.sb-n{font-family:var(--serif);font-size:3.2rem;font-weight:300;color:var(--gold);line-height:1}
+.sb-l{font-size:7.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--cdim);margin-top:5px}
+
+/* 3D FLOATING CARD inside story */
+.story-3d-card{position:absolute;top:36px;right:-20px;z-index:3;width:140px;border:1px solid var(--border);background:rgba(6,5,4,.88);backdrop-filter:blur(16px);padding:20px;animation:float3d 6s ease-in-out infinite;transform-style:preserve-3d}
+@keyframes float3d{0%,100%{transform:translateY(0) rotateX(2deg) rotateY(-4deg)}50%{transform:translateY(-16px) rotateX(-1deg) rotateY(2deg)}}
+.s3d-ico{width:32px;height:32px;border:1px solid var(--gold3);display:flex;align-items:center;justify-content:center;margin-bottom:12px}
+.s3d-ico svg{width:16px;height:16px;stroke:var(--gold);fill:none;stroke-width:1.5}
+.s3d-t{font-size:10px;font-weight:500;color:var(--cream);margin-bottom:4px}
+.s3d-s{font-size:8px;color:var(--cdim);line-height:1.5}
+
+.story-text{padding:6rem 5.5%;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}
+.story-text::before{content:'DRAGSTAR';position:absolute;bottom:-4rem;right:-2rem;font-family:var(--serif);font-size:12rem;font-weight:300;color:rgba(200,164,100,.025);line-height:1;pointer-events:none;user-select:none}
+.st-body{font-size:14px;line-height:2;color:var(--cdim);font-weight:300;margin:1.5rem 0 2.5rem;max-width:420px}
+.st-stats{display:flex;gap:2.5rem;margin-bottom:2.5rem}
+.ss-n{font-family:var(--serif);font-size:2.8rem;font-weight:300;color:var(--gold);line-height:1}
+.ss-l{font-size:8px;letter-spacing:.2em;text-transform:uppercase;color:var(--cfaint);margin-top:5px}
+
+/* ── 3D CATEGORY TILES ── */
+.cat-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:3px;height:560px;perspective:1200px}
+.cat-panel{position:relative;overflow:hidden;background:var(--bg3);transform-style:preserve-3d;transition:transform .5s,box-shadow .5s}
+.cat-panel:hover{transform:scale(1.02) translateZ(20px);box-shadow:0 60px 120px rgba(0,0,0,.7),0 0 0 1px rgba(200,164,100,.2);z-index:5}
+.cat-bg-fill{position:absolute;inset:0}
+.cat-c1 .cat-bg-fill{background:linear-gradient(150deg,#1e1810,#2c2010,#181410)}
+.cat-c2 .cat-bg-fill{background:linear-gradient(150deg,#0e1018,#151824,#0d1018)}
+.cat-c3 .cat-bg-fill{background:linear-gradient(150deg,#10180e,#18240e,#101808)}
+.cat-bgi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.52) saturate(.65);transition:transform .8s cubic-bezier(.25,.46,.45,.94),filter .5s}
+.cat-panel:hover .cat-bgi{transform:scale(1.06);filter:brightness(.38) saturate(.55)}
+.cat-ov{position:absolute;inset:0;background:linear-gradient(to top,rgba(6,5,4,.9) 0%,rgba(6,5,4,.08) 55%)}
+.cat-ring{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:120px;height:120px;border:1px solid rgba(200,164,100,.1);border-radius:50%;transition:all .5s}
+.cat-panel:hover .cat-ring{width:200px;height:200px;opacity:.2;border-color:rgba(200,164,100,.3)}
+/* 3D number */
+.cat-num{position:absolute;top:20px;right:20px;font-family:var(--serif);font-size:4rem;font-weight:300;color:rgba(200,164,100,.06);line-height:1;transition:color .4s}
+.cat-panel:hover .cat-num{color:rgba(200,164,100,.14)}
+.cat-c{position:absolute;bottom:0;left:0;right:0;padding:2.2rem}
+.cat-lbl{font-family:var(--serif);font-size:clamp(1.5rem,2.8vw,2.2rem);font-weight:300;color:var(--cream);line-height:1.2;margin-bottom:8px}
+.cat-cta{font-size:8.5px;letter-spacing:.25em;text-transform:uppercase;font-weight:500;color:var(--gold);display:inline-flex;align-items:center;gap:10px;opacity:0;transform:translateY(10px);transition:opacity .4s,transform .4s}
+.cat-panel:hover .cat-cta{opacity:1;transform:translateY(0)}
+.cat-cta::after{content:'';display:block;width:0;height:1px;background:var(--gold);transition:width .5s .1s}
+.cat-panel:hover .cat-cta::after{width:28px}
+
+/* ── ETHOS — 3D HOVER CARDS ── */
+.ethos{background:var(--bg2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:7rem 5%}
+.ethos-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:2px;margin-top:4.5rem}
+.ethos-card{background:var(--bg3);padding:2.8rem 2.2rem;border-top:2px solid transparent;position:relative;overflow:hidden;transition:background .4s,transform .4s,box-shadow .4s,border-color .3s;transform-style:preserve-3d;perspective:800px}
+.ethos-card:hover{background:var(--bg4);transform:translateY(-6px) rotateX(2deg);box-shadow:0 30px 60px rgba(0,0,0,.5);border-color:var(--gold)}
+.ec-glow{position:absolute;inset:0;background:radial-gradient(circle at 50% 0%,rgba(200,164,100,.08),transparent 60%);opacity:0;transition:opacity .4s}
+.ethos-card:hover .ec-glow{opacity:1}
+.ec-n{font-family:var(--serif);font-size:4.5rem;font-weight:300;color:rgba(200,164,100,.1);line-height:1;margin-bottom:1.2rem;transition:color .4s}
+.ethos-card:hover .ec-n{color:rgba(200,164,100,.22)}
+.ec-t{font-size:9.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:500;color:var(--cream);margin-bottom:.9rem}
+.ec-b{font-size:12.5px;line-height:1.85;color:var(--cfaint);font-weight:300}
+
+/* ── FEATURE PRODUCT ── */
+.feature{display:grid;grid-template-columns:1fr 1fr;min-height:640px;perspective:1400px}
+.feat-img{position:relative;overflow:hidden;background:var(--bg3)}
+.feat-img-fb{position:absolute;inset:0;background:linear-gradient(135deg,#18120e,#281e14)}
+.feat-img img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(.85);transition:transform 7s ease}
+.feat-img:hover img{transform:scale(1.04)}
+.feat-badge{position:absolute;top:28px;right:28px;z-index:2;background:#7a1c1c;color:#fff;font-size:8.5px;letter-spacing:.2em;text-transform:uppercase;font-weight:600;padding:7px 16px}
+.feat-txt{background:var(--bg2);padding:5.5rem 5%;display:flex;flex-direction:column;justify-content:center}
+.f-name{font-family:var(--serif);font-size:clamp(1.8rem,3.5vw,2.8rem);font-weight:300;color:var(--cream);margin:1.2rem 0 .9rem;line-height:1.15}
+.f-price-row{display:flex;align-items:baseline;gap:14px;margin-bottom:1.8rem}
+.f-price{font-family:var(--serif);font-size:2rem;font-weight:300;color:var(--gold)}
+.f-was{font-size:12px;color:var(--cfaint);text-decoration:line-through}
+.f-desc{font-size:13px;line-height:1.95;color:var(--cdim);font-weight:300;max-width:340px;margin-bottom:2.2rem}
+.sz-lbl{font-size:8.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--cfaint);margin-bottom:10px}
+.sz-row{display:flex;gap:7px;margin-bottom:2.2rem;flex-wrap:wrap}
+.sz{width:44px;height:44px;border:1px solid var(--borderl);background:none;color:var(--cdim);font-size:10.5px;font-family:var(--sans);font-weight:300;transition:all .3s}
+.sz:hover{border-color:var(--gold);color:var(--gold)}
+.sz.on{border-color:var(--gold);background:var(--gold);color:#060504}
+.f-mats{display:flex;gap:1.8rem;margin-bottom:2.5rem;flex-wrap:wrap}
+.mat{display:flex;align-items:center;gap:8px}
+.mat-d{width:5px;height:5px;border-radius:50%;background:var(--gold);opacity:.45}
+.mat-t{font-size:10.5px;color:var(--cfaint);letter-spacing:.04em}
+
+/* ── INSTAGRAM GRID ── */
+.gram{padding:6rem 5%;background:var(--bg)}
+.gram-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:3px;margin-top:3rem}
+.gram-item{aspect-ratio:1;overflow:hidden;position:relative;background:var(--bg3);transform-style:preserve-3d;transition:transform .4s,box-shadow .4s}
+.gram-item:hover{transform:scale(1.04) translateZ(10px);box-shadow:0 20px 40px rgba(0,0,0,.5);z-index:3}
+.gram-fb{position:absolute;inset:0}
+.gram-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.78) saturate(.78);transition:transform .7s,filter .4s}
+.gram-item:hover .gram-img{transform:scale(1.1);filter:brightness(.55) saturate(.95)}
+.gram-ov{position:absolute;inset:0;background:rgba(6,5,4,.45);opacity:0;transition:opacity .4s;display:flex;align-items:center;justify-content:center}
+.gram-item:hover .gram-ov{opacity:1}
+.gram-vt{font-size:7.5px;letter-spacing:.25em;text-transform:uppercase;color:var(--gold)}
+
+/* ── NEWSLETTER ── */
+.nl{padding:9rem 5%;background:var(--bg2);text-align:center;position:relative;overflow:hidden}
+/* Animated ring bg */
+.nl-ring{position:absolute;top:50%;left:50%;border-radius:50%;border:1px solid var(--border);transform:translate(-50%,-50%);animation:ringPulse 6s ease-in-out infinite}
+.nl-ring:nth-child(1){width:300px;height:300px;animation-delay:0s}
+.nl-ring:nth-child(2){width:500px;height:500px;animation-delay:-2s}
+.nl-ring:nth-child(3){width:700px;height:700px;animation-delay:-4s}
+@keyframes ringPulse{0%,100%{opacity:.3;transform:translate(-50%,-50%) scale(1)}50%{opacity:.08;transform:translate(-50%,-50%) scale(1.04)}}
+.nl-inner{position:relative;z-index:1}
+.nl-t{font-family:var(--serif);font-size:clamp(2.4rem,5.5vw,4.5rem);font-weight:300;color:var(--cream);margin-bottom:.8rem}
+.nl-t em{font-style:italic;color:var(--gold)}
+.nl-s{font-size:13px;color:var(--cdim);font-weight:300;margin-bottom:2.8rem}
+.nl-form{display:flex;max-width:500px;margin:0 auto;border:1px solid var(--border);transition:border-color .3s,box-shadow .3s}
+.nl-form:focus-within{border-color:var(--gold);box-shadow:0 0 0 4px rgba(200,164,100,.08)}
+.nl-in{flex:1;background:transparent;border:none;outline:none;padding:16px 20px;font-size:13px;color:var(--cream);font-family:var(--sans);font-weight:300}
+.nl-in::placeholder{color:var(--cfaint)}
+.nl-btn{background:var(--gold);color:#060504;padding:16px 28px;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;transition:background .3s}
+.nl-btn:hover{background:var(--gold2)}
+.nl-note{font-size:9.5px;color:var(--cfaint);margin-top:14px}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:6.5rem 5% 2.8rem}
+.foot-grid{display:grid;grid-template-columns:2fr 1fr 1fr 1.3fr;gap:4.5rem;margin-bottom:5rem}
+.foot-logo{font-family:var(--serif);font-size:28px;font-weight:300;letter-spacing:.22em;color:var(--cream);margin-bottom:1.4rem}
+.foot-logo b{font-style:italic;font-weight:400;color:var(--gold)}
+.foot-about{font-size:12px;line-height:1.85;color:var(--cfaint);font-weight:300;max-width:268px;margin-bottom:1.8rem}
+.foot-addr{font-size:11.5px;line-height:2;color:var(--cfaint);font-weight:300}
+.foot-addr em{color:var(--gold);font-style:normal}
+.fh{font-size:8.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:600;color:rgba(200,164,100,.55);margin-bottom:1.6rem}
+.flinks{display:flex;flex-direction:column}
+.flinks a{font-size:12.5px;color:var(--cfaint);font-weight:300;padding:8px 0;border-bottom:1px solid rgba(234,225,210,.05);transition:color .3s,padding-left .3s}
+.flinks a:hover{color:var(--gold);padding-left:6px}
+.fhr{display:flex;justify-content:space-between;font-size:11.5px;color:var(--cfaint);font-weight:300;padding:8px 0;border-bottom:1px solid rgba(234,225,210,.05)}
+.fhr .day{color:rgba(234,225,210,.55)}
+.fdiv{border:none;border-top:1px solid var(--border);margin:0 0 2.2rem}
+.fbot{display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.2rem}
+.fcopy{font-size:10.5px;color:rgba(234,225,210,.18);font-weight:300}
+.fsister{font-size:10.5px;color:var(--cfaint);font-weight:300}
+.fsister a{color:var(--gold);transition:opacity .3s}
+.fsister a:hover{opacity:.7}
+.fpay{display:flex;gap:7px}
+.pc{border:1px solid rgba(200,164,100,.13);padding:4px 10px;font-size:9.5px;color:rgba(234,225,210,.28);letter-spacing:.04em}
+.fack{font-size:10.5px;color:rgba(234,225,210,.16);font-weight:300;font-style:italic;margin-top:1.4rem;line-height:1.75;max-width:580px}
+
+/* ── ANIMATIONS ── */
+@keyframes rUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.reveal{opacity:0;transform:translateY(36px);transition:opacity 1s ease,transform 1s ease}
+.reveal.vis{opacity:1;transform:translateY(0)}
+.rL{opacity:0;transform:translateX(-36px);transition:opacity 1s ease,transform 1s ease}
+.rL.vis{opacity:1;transform:translateX(0)}
+.rR{opacity:0;transform:translateX(36px);transition:opacity 1s ease,transform 1s ease}
+.rR.vis{opacity:1;transform:translateX(0)}
+
+/* ── RESPONSIVE ── */
+@media(max-width:1100px){
+  .prod-grid{grid-template-columns:repeat(3,1fr)}
+  .cat-grid{grid-template-columns:1fr 1fr;height:auto}
+  .cat-c3{display:none}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:3rem}
+  .ethos-grid{grid-template-columns:1fr 1fr}
 }
-@media (max-width: 820px) {
-  body { cursor: auto; }
-  .cursor { display: none; }
-  .nav-center { display: none; }
-  .hamburger { display: flex; }
-  .hero-corner-badge { display: none; }
-  .prod-grid { grid-template-columns: repeat(2, 1fr); }
-  .story-section { grid-template-columns: 1fr; }
-  .story-img-col { min-height: 400px; }
-  .story-img-overlay { background: linear-gradient(to bottom, transparent 60%, var(--bg2) 100%); }
-  .cat-grid { grid-template-columns: 1fr; height: auto; }
-  .cat-c3 { display: block; }
-  .cat-panel { height: 280px; }
-  .ethos-grid { grid-template-columns: 1fr 1fr; }
-  .feature-section { grid-template-columns: 1fr; }
-  .feature-img-col { height: 400px; }
-  .gram-grid { grid-template-columns: repeat(3, 1fr); }
-  .footer-top { grid-template-columns: 1fr 1fr; gap: 2.5rem; }
-  .sec { padding: 5rem 5%; }
-  .hero-content { padding: 0 5% 6vh; }
-  .hero-h1 { font-size: clamp(3rem, 12vw, 5rem); }
+@media(max-width:820px){
+  body{cursor:auto}
+  #cur,#cur2{display:none}
+  .nav-links{display:none}
+  .burger{display:flex}
+  .hero-badge{display:none}
+  .prod-grid{grid-template-columns:repeat(2,1fr)}
+  .story{grid-template-columns:1fr}
+  .story-img{min-height:380px}
+  .story-img-ov{background:linear-gradient(to bottom,transparent 55%,var(--bg2) 100%)}
+  .story-3d-card{display:none}
+  .cat-grid{grid-template-columns:1fr;height:auto}
+  .cat-c3{display:block}
+  .cat-panel{height:270px}
+  .feature{grid-template-columns:1fr}
+  .feat-img{height:380px}
+  .gram-grid{grid-template-columns:repeat(3,1fr)}
+  .foot-grid{grid-template-columns:1fr 1fr;gap:2.5rem}
+  .sec{padding:5rem 5%}
+  .hero-h1{font-size:clamp(3.2rem,13vw,5rem)}
 }
-@media (max-width: 540px) {
-  .prod-grid { grid-template-columns: repeat(2, 1fr); gap: 2px; }
-  .ethos-grid { grid-template-columns: 1fr; }
-  .footer-top { grid-template-columns: 1fr; gap: 2rem; }
-  .gram-grid { grid-template-columns: repeat(2, 1fr); }
-  .nl-form { flex-direction: column; }
-  .nl-btn { padding: 16px; }
-  .story-stats { gap: 2rem; }
-  .hero-actions { flex-direction: column; }
-  .btn-gold, .btn-ghost { width: 100%; text-align: center; }
-  .feature-materials { flex-wrap: wrap; gap: 1rem; }
+@media(max-width:540px){
+  .prod-grid{grid-template-columns:1fr 1fr;gap:2px}
+  .ethos-grid{grid-template-columns:1fr}
+  .foot-grid{grid-template-columns:1fr;gap:2rem}
+  .gram-grid{grid-template-columns:repeat(2,1fr)}
+  .nl-form{flex-direction:column}
+  .nl-btn{padding:14px}
+  .hero-btns{flex-direction:column}
+  .btn-gold,.btn-ghost{text-align:center}
+  .f-mats{gap:1rem}
+  .st-stats{gap:1.8rem}
 }
 </style>
 </head>
 <body>
 
-<!-- CUSTOM CURSOR -->
-<div class="cursor" id="cursor">
-  <div class="cursor-dot" id="cursorDot"></div>
-  <div class="cursor-ring" id="cursorRing"></div>
-</div>
+<!-- CURSOR -->
+<div id="cur"></div>
+<div id="cur2"></div>
 
-<!-- NAV DRAWER OVERLAY -->
-<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-
-<!-- MOBILE NAV DRAWER -->
-<div class="nav-drawer" id="navDrawer">
-  <button class="drawer-close" onclick="closeDrawer()">✕</button>
+<!-- DRAWER -->
+<div class="drawer-bg" id="dbg" onclick="closeD()"></div>
+<div class="drawer" id="drw">
+  <button class="drawer-x" onclick="closeD()">✕</button>
   <ul>
-    <li><a href="#featured" onclick="closeDrawer()">New Arrivals</a></li>
-    <li><a href="#featured" onclick="closeDrawer()">Shop</a></li>
-    <li><a href="#categories" onclick="closeDrawer()">Collections</a></li>
-    <li><a href="#ethos" onclick="closeDrawer()">About</a></li>
-    <li><a href="#newsletter" onclick="closeDrawer()">Find Us</a></li>
+    <li><a href="#featured" onclick="closeD()">New Arrivals</a></li>
+    <li><a href="#featured" onclick="closeD()">Shop</a></li>
+    <li><a href="#cats" onclick="closeD()">Collections</a></li>
+    <li><a href="#ethos" onclick="closeD()">Brands</a></li>
+    <li><a href="#story" onclick="closeD()">About</a></li>
+    <li><a href="#nl" onclick="closeD()">Find Us</a></li>
   </ul>
 </div>
 
 <!-- NAV -->
-<nav class="nav" id="mainNav">
-  <div class="nav-logo"><span class="nav-logo-d">D</span>RAGSTAR</div>
-  <ul class="nav-center">
+<nav class="nav" id="nav">
+  <div class="nav-logo"><b>D</b>RAGSTAR</div>
+  <ul class="nav-links">
     <li><a href="#featured">New Arrivals</a></li>
     <li><a href="#featured">Shop</a></li>
-    <li><a href="#categories">Collections</a></li>
+    <li><a href="#cats">Collections</a></li>
     <li><a href="#ethos">Brands</a></li>
     <li><a href="#story">About</a></li>
-    <li><a href="#newsletter">Find Us</a></li>
+    <li><a href="#nl">Find Us</a></li>
   </ul>
-  <div class="nav-right">
-    <div class="nav-icon">
+  <div class="nav-r">
+    <div class="nav-ico">
       <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
     </div>
-    <div class="nav-icon">
+    <div class="nav-ico">
       <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
     </div>
     <div class="nav-bag">Bag (0)</div>
-    <div class="hamburger" onclick="openDrawer()">
-      <span></span><span></span><span></span>
-    </div>
+    <div class="burger" onclick="openD()"><span></span><span></span><span></span></div>
   </div>
 </nav>
 
-<!-- HERO -->
+<!-- ══════════════════════ HERO ══════════════════════ -->
 <section class="hero" id="hero">
-  <div class="hero-bg"></div>
-  <div class="hero-particles" id="particles"></div>
-  <div class="hero-img-wrap">
-    <div class="hero-img-fallback"></div>
-    <img class="hero-img" src="https://www.dragstar.com.au/cdn/shop/files/Dragstar_Winter_2026_1024x.jpg" alt="Dragstar Winter 2026 Collection" onerror="this.style.display='none'">
-  </div>
-  <div class="hero-grid-lines"></div>
-  <div class="hero-vignette"></div>
+  <div class="hero-scene">
+    <div class="hero-far"></div>
 
-  <div class="hero-corner-badge">
-    <div class="hero-badge-num">30+</div>
-    <div class="hero-badge-label">Years crafting</div>
-    <div class="hero-badge-label" style="margin-top:2px">in Sydney</div>
-  </div>
+    <!-- ORBs -->
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
 
-  <div class="hero-content">
-    <div class="hero-eyebrow">
-      <div class="hero-eyebrow-line"></div>
-      Sydney Made · Ethically Crafted · Est. 1990s
+    <!-- ACTUAL HERO IMAGE with 3D zoom-out -->
+    <div class="hero-img-layer" id="heroImgLayer">
+      <div class="hero-img-fallback"></div>
+      <img src="https://www.dragstar.com.au/cdn/shop/files/Dragstar_Winter_2026_1024x.jpg" alt="Dragstar Winter 2026" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:60% 25%" onerror="this.style.display='none'">
     </div>
+
+    <!-- GRID LINES -->
+    <div class="hero-grid">
+      <svg viewBox="0 0 1200 800" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+        <defs>
+          <linearGradient id="gf" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0%" stop-color="#C8A464" stop-opacity="0"/>
+            <stop offset="40%" stop-color="#C8A464" stop-opacity="1"/>
+            <stop offset="100%" stop-color="#C8A464" stop-opacity="0.3"/>
+          </linearGradient>
+        </defs>
+        <!-- Perspective lines converging to vanishing point -->
+        <line x1="600" y1="400" x2="0" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="200" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="400" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="600" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="800" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="1000" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <line x1="600" y1="400" x2="1200" y2="800" stroke="url(#gf)" stroke-width="0.5"/>
+        <!-- Horizontal lines -->
+        <line x1="0" y1="500" x2="1200" y2="500" stroke="#C8A464" stroke-width="0.3" stroke-opacity="0.4"/>
+        <line x1="0" y1="580" x2="1200" y2="580" stroke="#C8A464" stroke-width="0.3" stroke-opacity="0.25"/>
+        <line x1="0" y1="650" x2="1200" y2="650" stroke="#C8A464" stroke-width="0.3" stroke-opacity="0.15"/>
+        <line x1="0" y1="720" x2="1200" y2="720" stroke="#C8A464" stroke-width="0.3" stroke-opacity="0.08"/>
+      </svg>
+    </div>
+
+    <!-- CANVAS for floating gold particles -->
+    <canvas id="heroCanvas"></canvas>
+
+    <div class="hero-mid" id="heroMid"></div>
+    <div class="hero-vbot"></div>
+    <div class="hero-vtop"></div>
+  </div>
+
+  <!-- BADGE -->
+  <div class="hero-badge">
+    <div class="hb-n">30+</div>
+    <div class="hb-l">Years crafting</div>
+    <div class="hb-l" style="margin-top:2px">in Sydney</div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="hero-c">
+    <div class="hero-tag"><div class="hero-tag-line"></div>Sydney Made · Ethically Crafted · Est. 1990s</div>
     <h1 class="hero-h1">Wear What<em>Endures.</em></h1>
     <p class="hero-sub">Womenswear handcrafted in Sydney for over 30 years. Designed to build a wardrobe that lasts a lifetime — not a season.</p>
-    <div class="hero-actions">
-      <button class="btn-gold" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">Explore the Edit</button>
-      <button class="btn-ghost" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">Our Philosophy</button>
+    <div class="hero-btns">
+      <button class="btn-gold btn-mag" onclick="document.getElementById('featured').scrollIntoView({behavior:'smooth'})">
+        <div class="btn-shine"></div>Explore the Edit
+      </button>
+      <button class="btn-ghost btn-mag" onclick="document.getElementById('story').scrollIntoView({behavior:'smooth'})">Our Philosophy</button>
     </div>
   </div>
 
   <div class="hero-scroll">
-    <div class="hero-scroll-track"></div>
-    <div class="hero-scroll-text">Scroll</div>
+    <div class="h-scroll-track"></div>
+    <div class="h-scroll-text">Scroll</div>
   </div>
 </section>
 
 <!-- TICKER -->
 <div class="ticker">
-  <div class="ticker-track" id="ticker">
-    <div class="ticker-item">Handmade in Sydney<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Ethical Production Always<span class="ticker-sep"></span></div>
-    <div class="ticker-item">30+ Years of Craft<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Deadstock &amp; Vintage Fabrics<span class="ticker-sep"></span></div>
-    <div class="ticker-item">One of a Kind Pieces<span class="ticker-sep"></span></div>
-    <div class="ticker-item">535a King St Newtown Sydney<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Wheelchair Accessible Store<span class="ticker-sep"></span></div>
-    <div class="ticker-item">New Winter 2026 Edit Now Live<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Handmade in Sydney<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Ethical Production Always<span class="ticker-sep"></span></div>
-    <div class="ticker-item">30+ Years of Craft<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Deadstock &amp; Vintage Fabrics<span class="ticker-sep"></span></div>
-    <div class="ticker-item">One of a Kind Pieces<span class="ticker-sep"></span></div>
-    <div class="ticker-item">535a King St Newtown Sydney<span class="ticker-sep"></span></div>
-    <div class="ticker-item">Wheelchair Accessible Store<span class="ticker-sep"></span></div>
-    <div class="ticker-item">New Winter 2026 Edit Now Live<span class="ticker-sep"></span></div>
+  <div class="tick-track">
+    <div class="tick-item">Handmade in Sydney<span class="tick-dot"></span></div>
+    <div class="tick-item">Ethical Production Always<span class="tick-dot"></span></div>
+    <div class="tick-item">30+ Years of Craft<span class="tick-dot"></span></div>
+    <div class="tick-item">Deadstock &amp; Vintage Fabrics<span class="tick-dot"></span></div>
+    <div class="tick-item">One of a Kind Pieces<span class="tick-dot"></span></div>
+    <div class="tick-item">535a King St Newtown Sydney<span class="tick-dot"></span></div>
+    <div class="tick-item">Wheelchair Accessible Store<span class="tick-dot"></span></div>
+    <div class="tick-item">New Winter 2026 Edit Now Live<span class="tick-dot"></span></div>
+    <div class="tick-item">Handmade in Sydney<span class="tick-dot"></span></div>
+    <div class="tick-item">Ethical Production Always<span class="tick-dot"></span></div>
+    <div class="tick-item">30+ Years of Craft<span class="tick-dot"></span></div>
+    <div class="tick-item">Deadstock &amp; Vintage Fabrics<span class="tick-dot"></span></div>
+    <div class="tick-item">One of a Kind Pieces<span class="tick-dot"></span></div>
+    <div class="tick-item">535a King St Newtown Sydney<span class="tick-dot"></span></div>
+    <div class="tick-item">Wheelchair Accessible Store<span class="tick-dot"></span></div>
+    <div class="tick-item">New Winter 2026 Edit Now Live<span class="tick-dot"></span></div>
   </div>
 </div>
 
-<!-- FEATURED EDIT -->
+<!-- ══════════ FEATURED EDIT ══════════ -->
 <section class="sec reveal" id="featured">
   <div class="sec-head">
     <div>
-      <div class="sec-eyebrow">Winter 2026</div>
+      <div class="eyebrow">Winter 2026</div>
       <h2 class="sec-title">The <em>Featured</em> Edit</h2>
     </div>
-    <a href="#" class="link-underline">View Full Collection →</a>
+    <a href="#" class="a-more">View Full Collection →</a>
   </div>
+  <div class="prod-grid" id="pgrid">
 
-  <div class="prod-grid">
-
-    <!-- Product 1 -->
-    <div class="prod-card p1">
+    <div class="prod-card c1">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </div>
-          <div class="prod-placeholder-text">Sydney Made</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/23894019-946c-414e-ac44-1d86c5c8f830_500x.jpg" alt="Stand Collar Shirt" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-badge badge-n">New</div>
-        <div class="prod-hover-panel">
-          <button class="prod-quick-btn">Quick Add to Bag</button>
-        </div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+          <div class="pp-txt">Sydney Made</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/23894019-946c-414e-ac44-1d86c5c8f830_500x.jpg" alt="Stand Collar Shirt" loading="lazy" onerror="this.style.display='none'">
+        <div class="p-badge bn">New</div>
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Stand Collar Shirt — Ticking Stripe</div>
-        <div class="prod-price">$225.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Stand Collar Shirt — Ticking Stripe</div><div class="p-price">$225.00 AUD</div></div>
     </div>
 
-    <!-- Product 2 -->
-    <div class="prod-card p2">
+    <div class="prod-card c2">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
-          <div class="prod-placeholder-text">Handprinted</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/cdf26028-eb4d-4e55-ac10-746d49313772_500x.jpg" alt="Bateau Dress Fern" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-badge badge-o">Handprinted</div>
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+          <div class="pp-txt">Handprinted</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/cdf26028-eb4d-4e55-ac10-746d49313772_500x.jpg" alt="Bateau Dress" loading="lazy" onerror="this.style.display='none'">
+        <div class="p-badge bo">Handprinted</div>
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Bateau Dress — Hand Printed Fern on Navy</div>
-        <div class="prod-price">$295.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Bateau Dress — Fern on Navy</div><div class="p-price">$295.00 AUD</div></div>
     </div>
 
-    <!-- Product 3 -->
-    <div class="prod-card p3">
+    <div class="prod-card c3">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
-          <div class="prod-placeholder-text">Japanese Textile</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/767a7705-52c4-40e1-8b33-07d2e13937aa_500x.jpg" alt="Bateau Dress Stripe" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M3 9h18M9 21V9"/></svg></div>
+          <div class="pp-txt">Japanese Textile</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/767a7705-52c4-40e1-8b33-07d2e13937aa_500x.jpg" alt="Bateau Dress Stripe" loading="lazy" onerror="this.style.display='none'">
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Bateau Dress — Japanese Textured Stripe</div>
-        <div class="prod-price">$285.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Bateau Dress — Japanese Textured Stripe</div><div class="p-price">$285.00 AUD</div></div>
     </div>
 
-    <!-- Product 4 -->
-    <div class="prod-card p4">
+    <div class="prod-card c4">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 8v4l3 3"/></svg></div>
-          <div class="prod-placeholder-text">One of a Kind</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/34876424-cdf2-490d-b42d-8aebf9fd98e8_500x.jpg" alt="Boxy Jacket Embroidered" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-badge badge-o">One of a Kind</div>
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+          <div class="pp-txt">One of a Kind</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/34876424-cdf2-490d-b42d-8aebf9fd98e8_500x.jpg" alt="Boxy Jacket" loading="lazy" onerror="this.style.display='none'">
+        <div class="p-badge bo">One of a Kind</div>
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Boxy Jacket — Embroidered Deluxe</div>
-        <div class="prod-price">$320.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Boxy Jacket — Embroidered Deluxe</div><div class="p-price">$320.00 AUD</div></div>
     </div>
 
-    <!-- Product 5 -->
-    <div class="prod-card p5">
+    <div class="prod-card c5">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M6 2v6l-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10l-2-2V2"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
-          <div class="prod-placeholder-text">Dark Denim</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/738bc0ae089364236325e7c583aff625714fc2cc_500x.jpg" alt="Wide Leg Jeans" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><line x1="12" y1="2" x2="12" y2="22"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg></div>
+          <div class="pp-txt">Dark Denim</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/738bc0ae089364236325e7c583aff625714fc2cc_500x.jpg" alt="Wide Leg Jeans" loading="lazy" onerror="this.style.display='none'">
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Classic Wide Leg Jeans — Dark Denim</div>
-        <div class="prod-price">$220.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Classic Wide Leg Jeans — Dark Denim</div><div class="p-price">$220.00 AUD</div></div>
     </div>
 
-    <!-- Product 6 -->
-    <div class="prod-card p6">
+    <div class="prod-card c6">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg></div>
-          <div class="prod-placeholder-text">Navy Cotton</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/80faa88a-c6fe-4cb2-9aa6-e5c1b3eec0f9_500x.jpg" alt="Katie Cropped Shirt" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-badge badge-n">New</div>
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M20 7l-8-4-8 4m16 0-8 4m8-4v10l-8 4m0-10L4 7m8 4v10"/></svg></div>
+          <div class="pp-txt">Navy Cotton</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/80faa88a-c6fe-4cb2-9aa6-e5c1b3eec0f9_500x.jpg" alt="Katie Cropped Shirt" loading="lazy" onerror="this.style.display='none'">
+        <div class="p-badge bn">New</div>
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Katie Cropped Shirt — Navy Silk Blend</div>
-        <div class="prod-price">$220.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Katie Cropped Shirt — Navy Silk Blend</div><div class="p-price">$220.00 AUD</div></div>
     </div>
 
-    <!-- Product 7 -->
-    <div class="prod-card p7">
+    <div class="prod-card c7">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
-          <div class="prod-placeholder-text">Plum Linen</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/11264bb1-ed30-451f-a782-988126d88e86_500x.jpg" alt="Favourite Dress Plum" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/></svg></div>
+          <div class="pp-txt">Plum Linen</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/11264bb1-ed30-451f-a782-988126d88e86_500x.jpg" alt="Favourite Dress" loading="lazy" onerror="this.style.display='none'">
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Favourite Dress — Plum Linen Stripe</div>
-        <div class="prod-price">$275.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Favourite Dress — Plum Linen Stripe</div><div class="p-price">$275.00 AUD</div></div>
     </div>
 
-    <!-- Product 8 -->
-    <div class="prod-card p8">
+    <div class="prod-card c8">
       <div class="prod-img-wrap">
-        <div class="prod-placeholder">
-          <div class="prod-placeholder-bg"></div>
-          <div class="prod-placeholder-icon"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
-          <div class="prod-placeholder-text">Lightweight Denim</div>
-        </div>
-        <img class="prod-img" src="https://www.dragstar.com.au/cdn/shop/files/31G_500x.jpg" alt="Boxy Jacket Denim" loading="lazy" onerror="this.style.display='none'">
-        <div class="prod-hover-panel"><button class="prod-quick-btn">Quick Add to Bag</button></div>
+        <div class="pp"><div class="pp-bg"></div>
+          <div class="pp-ico"><svg viewBox="0 0 24 24"><path d="M6 2v6l-2 2v10a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V10l-2-2V2"/><line x1="12" y1="2" x2="12" y2="12"/></svg></div>
+          <div class="pp-txt">Lightweight Denim</div></div>
+        <img class="pi" src="https://www.dragstar.com.au/cdn/shop/files/31G_500x.jpg" alt="Boxy Jacket Denim" loading="lazy" onerror="this.style.display='none'">
+        <div class="prod-tilt-shine"></div>
+        <div class="prod-hover-panel"><button class="pqb">Quick Add to Bag</button></div>
       </div>
-      <div class="prod-info">
-        <div class="prod-name">Boxy Jacket — Lightweight Denim</div>
-        <div class="prod-price">$155.00 AUD</div>
-      </div>
+      <div class="p-info"><div class="p-name">Boxy Jacket — Lightweight Denim</div><div class="p-price">$155.00 AUD</div></div>
     </div>
 
   </div>
 </section>
 
-<!-- STORY SECTION -->
-<div class="story-section" id="story">
-  <div class="story-img-col reveal-left">
-    <div class="story-img-bg"></div>
+<!-- ══════════ STORY ══════════ -->
+<div class="story" id="story">
+  <div class="story-img rL">
+    <div class="story-img-fb"></div>
     <div class="story-img-inner">
       <img src="https://www.dragstar.com.au/cdn/shop/files/Dragstar_Winter_2026_1024x.jpg" alt="Dragstar Story" onerror="this.style.display='none'">
     </div>
-    <div class="story-img-overlay"></div>
-    <div class="story-year-badge">
-      <div class="story-year">30+</div>
-      <div class="story-year-sub">Years making it</div>
-      <div class="story-year-sub">in Sydney</div>
+    <div class="story-img-ov"></div>
+    <div class="story-badge">
+      <div class="sb-n">30+</div>
+      <div class="sb-l">Years making it</div>
+      <div class="sb-l" style="margin-top:3px">in Sydney</div>
+    </div>
+    <!-- 3D floating card -->
+    <div class="story-3d-card">
+      <div class="s3d-ico">
+        <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      </div>
+      <div class="s3d-t">100% Ethical</div>
+      <div class="s3d-s">Fair wages · Local production · Deadstock fabrics</div>
     </div>
   </div>
-  <div class="story-text-col reveal-right">
-    <div class="sec-eyebrow">Our Story</div>
-    <h2 class="sec-title" style="font-size:clamp(2rem,4vw,3.2rem)">Made in<br><em>Newtown,</em><br>Sydney.</h2>
-    <p class="story-body">Designed by Celia Morris and handcrafted in Sydney for over 30 years. Every Dragstar piece is built to last — and to work back with everything you already own from us. We call it the Dragstar Wardrobe.</p>
-    <div class="story-stats">
-      <div>
-        <div class="s-stat-n">100%</div>
-        <div class="s-stat-l">Locally made</div>
-      </div>
-      <div>
-        <div class="s-stat-n">3</div>
-        <div class="s-stat-l">Sister stores</div>
-      </div>
-      <div>
-        <div class="s-stat-n">∞</div>
-        <div class="s-stat-l">The wardrobe</div>
-      </div>
+  <div class="story-text rR">
+    <div class="eyebrow">Our Story</div>
+    <h2 class="sec-title" style="font-size:clamp(1.9rem,3.8vw,3rem)">Made in<br><em>Newtown,</em><br>Sydney.</h2>
+    <p class="st-body">Designed by Celia Morris and handcrafted in Sydney for over 30 years. Every Dragstar piece is built to last — and to work back with everything you already own from us. We call it the Dragstar Wardrobe.</p>
+    <div class="st-stats">
+      <div><div class="ss-n">100%</div><div class="ss-l">Locally made</div></div>
+      <div><div class="ss-n">3</div><div class="ss-l">Sister stores</div></div>
+      <div><div class="ss-n">∞</div><div class="ss-l">The wardrobe</div></div>
     </div>
-    <button class="btn-gold" style="width:fit-content">Discover Our Story</button>
+    <button class="btn-gold btn-mag" style="width:fit-content"><div class="btn-shine"></div>Discover Our Story</button>
   </div>
 </div>
 
-<!-- CATEGORIES -->
-<section class="sec" id="categories" style="padding:0">
+<!-- ══════════ CATEGORIES ══════════ -->
+<section id="cats" style="padding:0">
   <div class="cat-grid">
     <div class="cat-panel cat-c1 reveal">
-      <div class="cat-bg"></div>
-      <img class="cat-bg-img" src="https://www.dragstar.com.au/cdn/shop/files/hybrid-workwear_800x.jpg" alt="Hybrid Workwear" onerror="this.style.display='none'">
-      <div class="cat-overlay"></div>
-      <div class="cat-decor"></div>
-      <div class="cat-content">
-        <div class="cat-label">Hybrid<br>Workwear</div>
-        <div class="cat-cta">Shop Collection</div>
-      </div>
+      <div class="cat-bg-fill"></div>
+      <img class="cat-bgi" src="https://www.dragstar.com.au/cdn/shop/files/hybrid-workwear_800x.jpg" alt="Hybrid Workwear" onerror="this.style.display='none'">
+      <div class="cat-ov"></div><div class="cat-ring"></div>
+      <div class="cat-num">01</div>
+      <div class="cat-c"><div class="cat-lbl">Hybrid<br>Workwear</div><div class="cat-cta">Shop Collection</div></div>
     </div>
     <div class="cat-panel cat-c2 reveal">
-      <div class="cat-bg"></div>
-      <img class="cat-bg-img" src="https://www.dragstar.com.au/cdn/shop/files/one-of-a-kind_800x.jpg" alt="One of a Kind" onerror="this.style.display='none'">
-      <div class="cat-overlay"></div>
-      <div class="cat-decor"></div>
-      <div class="cat-content">
-        <div class="cat-label">One of<br>a Kind</div>
-        <div class="cat-cta">Unique Pieces</div>
-      </div>
+      <div class="cat-bg-fill"></div>
+      <img class="cat-bgi" src="https://www.dragstar.com.au/cdn/shop/files/one-of-a-kind_800x.jpg" alt="One of a Kind" onerror="this.style.display='none'">
+      <div class="cat-ov"></div><div class="cat-ring"></div>
+      <div class="cat-num">02</div>
+      <div class="cat-c"><div class="cat-lbl">One of<br>a Kind</div><div class="cat-cta">Unique Pieces</div></div>
     </div>
     <div class="cat-panel cat-c3 reveal">
-      <div class="cat-bg"></div>
-      <img class="cat-bg-img" src="https://www.dragstar.com.au/cdn/shop/files/pants-and-jeans_800x.jpg" alt="Pants and Jeans" onerror="this.style.display='none'">
-      <div class="cat-overlay"></div>
-      <div class="cat-decor"></div>
-      <div class="cat-content">
-        <div class="cat-label">Pants<br>&amp; Denim</div>
-        <div class="cat-cta">Shop Now</div>
-      </div>
+      <div class="cat-bg-fill"></div>
+      <img class="cat-bgi" src="https://www.dragstar.com.au/cdn/shop/files/pants-and-jeans_800x.jpg" alt="Pants and Jeans" onerror="this.style.display='none'">
+      <div class="cat-ov"></div><div class="cat-ring"></div>
+      <div class="cat-num">03</div>
+      <div class="cat-c"><div class="cat-lbl">Pants<br>&amp; Denim</div><div class="cat-cta">Shop Now</div></div>
     </div>
   </div>
 </section>
 
-<!-- ETHOS -->
-<section class="ethos-section reveal" id="ethos">
-  <div class="sec-eyebrow">What We Stand For</div>
+<!-- ══════════ ETHOS ══════════ -->
+<section class="ethos reveal" id="ethos">
+  <div class="eyebrow">What We Stand For</div>
   <h2 class="sec-title">The Dragstar <em>Ethos</em></h2>
   <div class="ethos-grid">
-    <div class="ethos-card">
-      <div class="ethos-num">01</div>
-      <div class="ethos-title">Handmade in Sydney</div>
-      <div class="ethos-body">Every garment cut, sewn and finished by hand in our Sydney studio. Never outsourced. Never rushed.</div>
-    </div>
-    <div class="ethos-card">
-      <div class="ethos-num">02</div>
-      <div class="ethos-title">Ethical Always</div>
-      <div class="ethos-body">Fair wages, local production, deadstock and vintage fabrics. Sustainability is our foundation, not our marketing.</div>
-    </div>
-    <div class="ethos-card">
-      <div class="ethos-num">03</div>
-      <div class="ethos-title">Built to Last</div>
-      <div class="ethos-body">We design for longevity, not trends. The same cut from five years ago still works with what we make today.</div>
-    </div>
-    <div class="ethos-card">
-      <div class="ethos-num">04</div>
-      <div class="ethos-title">Your Wardrobe</div>
-      <div class="ethos-body">Every new collection is designed to pair with your existing Dragstar pieces. One wardrobe, forever growing.</div>
-    </div>
+    <div class="ethos-card"><div class="ec-glow"></div><div class="ec-n">01</div><div class="ec-t">Handmade in Sydney</div><div class="ec-b">Every garment cut, sewn and finished by hand in our Sydney studio. Never outsourced. Never rushed.</div></div>
+    <div class="ethos-card"><div class="ec-glow"></div><div class="ec-n">02</div><div class="ec-t">Ethical Always</div><div class="ec-b">Fair wages, local production, deadstock and vintage fabrics. Sustainability is our foundation, not our marketing.</div></div>
+    <div class="ethos-card"><div class="ec-glow"></div><div class="ec-n">03</div><div class="ec-t">Built to Last</div><div class="ec-b">We design for longevity, not trends. The same cut from five years ago still works with what we make today.</div></div>
+    <div class="ethos-card"><div class="ec-glow"></div><div class="ec-n">04</div><div class="ec-t">Your Wardrobe</div><div class="ec-b">Every new collection pairs with your existing Dragstar pieces. One wardrobe, forever growing.</div></div>
   </div>
 </section>
 
-<!-- FEATURE PRODUCT -->
-<section class="feature-section reveal">
-  <div class="feature-img-col">
-    <div class="feature-img-bg"></div>
+<!-- ══════════ FEATURE PRODUCT ══════════ -->
+<section class="feature reveal">
+  <div class="feat-img">
+    <div class="feat-img-fb"></div>
     <img src="https://www.dragstar.com.au/cdn/shop/files/34F_500x.jpg" alt="Boxy Jacket Navy" onerror="this.style.display='none'">
-    <div class="feature-img-badge">On Sale</div>
+    <div class="feat-badge">On Sale</div>
   </div>
-  <div class="feature-text-col">
-    <div class="sec-eyebrow">Best Value Pick</div>
-    <h2 class="feature-name">Boxy Jacket<br>Textured Navy<br>Cotton</h2>
-    <div class="feature-price-row">
-      <span class="feature-price">$120.00 AUD</span>
-      <span class="feature-was">Was $185.00</span>
+  <div class="feat-txt">
+    <div class="eyebrow">Best Value Pick</div>
+    <h2 class="f-name">Boxy Jacket<br>Textured Navy<br>Cotton</h2>
+    <div class="f-price-row"><span class="f-price">$120.00 AUD</span><span class="f-was">Was $185.00</span></div>
+    <p class="f-desc">A Dragstar signature — relaxed boxy cut, deep pockets, textured navy cotton that only gets better with wear. Made in Sydney.</p>
+    <div class="sz-lbl">Select Size</div>
+    <div class="sz-row">
+      <button class="sz">S</button><button class="sz on">M</button>
+      <button class="sz">L</button><button class="sz">XL</button><button class="sz">XXL</button>
     </div>
-    <p class="feature-desc">A Dragstar signature — relaxed boxy cut, deep pockets, textured navy cotton that only gets better with wear. Made in Sydney with love.</p>
-    <div class="sizes-label">Select Size</div>
-    <div class="sizes-row">
-      <button class="size-opt">S</button>
-      <button class="size-opt active">M</button>
-      <button class="size-opt">L</button>
-      <button class="size-opt">XL</button>
-      <button class="size-opt">XXL</button>
+    <div class="f-mats">
+      <div class="mat"><div class="mat-d"></div><div class="mat-t">100% Cotton</div></div>
+      <div class="mat"><div class="mat-d"></div><div class="mat-t">Made in Sydney</div></div>
+      <div class="mat"><div class="mat-d"></div><div class="mat-t">Deadstock Fabric</div></div>
     </div>
-    <div class="feature-materials">
-      <div class="mat-item"><div class="mat-dot"></div><div class="mat-text">100% Cotton</div></div>
-      <div class="mat-item"><div class="mat-dot"></div><div class="mat-text">Made in Sydney</div></div>
-      <div class="mat-item"><div class="mat-dot"></div><div class="mat-text">Deadstock Fabric</div></div>
-    </div>
-    <button class="btn-gold">Add to Bag</button>
+    <button class="btn-gold btn-mag" style="width:fit-content"><div class="btn-shine"></div>Add to Bag</button>
   </div>
 </section>
 
-<!-- INSTAGRAM STRIP -->
-<section class="gram-section reveal">
+<!-- ══════════ INSTAGRAM ══════════ -->
+<section class="gram reveal">
   <div class="sec-head">
-    <div>
-      <div class="sec-eyebrow">On Instagram</div>
-      <h2 class="sec-title">Follow <em>@dragstarclothing</em></h2>
-    </div>
-    <a href="https://instagram.com" class="link-underline">Follow Us →</a>
+    <div><div class="eyebrow">On Instagram</div><h2 class="sec-title">Follow <em>@dragstar</em></h2></div>
+    <a href="https://instagram.com" class="a-more">Follow Us →</a>
   </div>
   <div class="gram-grid">
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#1a1208,#2e1f0d)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/23894019-946c-414e-ac44-1d86c5c8f830_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#0e1218,#161e2a)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/cdf26028-eb4d-4e55-ac10-746d49313772_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#181210,#281e14)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/31G_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#0e1810,#142414)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/767a7705-52c4-40e1-8b33-07d2e13937aa_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#18120e,#281e14)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/738bc0ae089364236325e7c583aff625714fc2cc_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
-    <div class="gram-item">
-      <div class="gram-placeholder" style="background:linear-gradient(135deg,#100e18,#18142c)"></div>
-      <img class="gram-item-img" src="https://www.dragstar.com.au/cdn/shop/files/11264bb1-ed30-451f-a782-988126d88e86_500x.jpg" alt="Instagram" loading="lazy" onerror="this.style.display='none'">
-      <div class="gram-hover"><span class="gram-hover-text">View Post</span></div>
-    </div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#1a1208,#2e1f0d)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/23894019-946c-414e-ac44-1d86c5c8f830_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#0e1218,#161e2a)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/cdf26028-eb4d-4e55-ac10-746d49313772_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#181210,#281e14)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/31G_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#0e1810,#142414)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/767a7705-52c4-40e1-8b33-07d2e13937aa_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#18120e,#281e14)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/738bc0ae089364236325e7c583aff625714fc2cc_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
+    <div class="gram-item"><div class="gram-fb" style="background:linear-gradient(135deg,#100e18,#18142c)"></div><img class="gram-img" src="https://www.dragstar.com.au/cdn/shop/files/11264bb1-ed30-451f-a782-988126d88e86_500x.jpg" loading="lazy" onerror="this.style.display='none'"><div class="gram-ov"><span class="gram-vt">View Post</span></div></div>
   </div>
 </section>
 
-<!-- NEWSLETTER -->
-<section class="nl-section reveal" id="newsletter">
-  <div class="sec-eyebrow" style="justify-content:center;margin-bottom:1.5rem">Stay Connected</div>
-  <h2 class="nl-title">Join the <em>Dragstar</em> Circle</h2>
-  <p class="nl-sub">New arrivals, studio stories and exclusive offers — straight to your inbox. No spam, ever.</p>
-  <div class="nl-form">
-    <input class="nl-input" type="email" placeholder="Your email address">
-    <button class="nl-btn">Subscribe</button>
+<!-- ══════════ NEWSLETTER ══════════ -->
+<section class="nl reveal" id="nl">
+  <div class="nl-ring"></div><div class="nl-ring"></div><div class="nl-ring"></div>
+  <div class="nl-inner">
+    <div class="eyebrow" style="justify-content:center;margin-bottom:1.4rem">Stay Connected</div>
+    <h2 class="nl-t">Join the <em>Dragstar</em> Circle</h2>
+    <p class="nl-s">New arrivals, studio stories and exclusive offers — straight to your inbox. No spam, ever.</p>
+    <div class="nl-form">
+      <input class="nl-in" type="email" placeholder="Your email address">
+      <button class="nl-btn">Subscribe</button>
+    </div>
+    <p class="nl-note">By subscribing you agree to our privacy policy. Unsubscribe anytime.</p>
   </div>
-  <p class="nl-promise">By subscribing, you agree to our privacy policy. Unsubscribe anytime.</p>
 </section>
 
-<!-- FOOTER -->
+<!-- ══════════ FOOTER ══════════ -->
 <footer>
-  <div class="footer-top">
+  <div class="foot-grid">
     <div>
-      <div class="footer-logo"><span>D</span>RAGSTAR</div>
-      <p class="footer-tagline">Australian ethical womenswear, designed by Celia Morris and handcrafted in Sydney's inner west since the early 1990s. Built to last. Designed to endure.</p>
-      <div class="footer-addr">
-        <strong class="highlight">535a King St</strong><br>
-        Newtown, Sydney 2042<br>
-        Australia<br><br>
-        <span class="highlight">Wheelchair Accessible Store</span>
+      <div class="foot-logo"><b>D</b>RAGSTAR</div>
+      <p class="foot-about">Australian ethical womenswear, designed by Celia Morris and handcrafted in Sydney's inner west since the early 1990s. Built to last. Designed to endure.</p>
+      <div class="foot-addr"><em>535a King St</em><br>Newtown, Sydney 2042<br>Australia<br><br><em>Wheelchair Accessible Store</em></div>
+    </div>
+    <div>
+      <div class="fh">Shop</div>
+      <div class="flinks">
+        <a href="#">New Arrivals</a><a href="#">Current Edit</a><a href="#">Dresses</a>
+        <a href="#">Pants &amp; Jeans</a><a href="#">Jackets</a><a href="#">Tops &amp; Shirts</a>
+        <a href="#">Accessories</a><a href="#">Sale</a>
       </div>
     </div>
     <div>
-      <div class="footer-col-h">Shop</div>
-      <div class="footer-links">
-        <a href="#">New Arrivals</a>
-        <a href="#">Current Edit</a>
-        <a href="#">Dresses</a>
-        <a href="#">Pants &amp; Jeans</a>
-        <a href="#">Jackets</a>
-        <a href="#">Tops &amp; Shirts</a>
-        <a href="#">Accessories</a>
-        <a href="#">Sale</a>
+      <div class="fh">Information</div>
+      <div class="flinks">
+        <a href="#">About Us</a><a href="#">Find Us</a><a href="#">Postage &amp; Returns</a>
+        <a href="#">Size Guide</a><a href="#">Privacy Policy</a><a href="#">Conditions of Use</a>
       </div>
+      <div class="fh" style="margin-top:1.8rem">Sister Stores</div>
+      <div class="flinks"><a href="https://www.shorties.com.au">Shorties Children Store</a><a href="https://outletnewtown.com.au">Outlet Newtown</a></div>
     </div>
     <div>
-      <div class="footer-col-h">Information</div>
-      <div class="footer-links">
-        <a href="#">About Us</a>
-        <a href="#">Find Us</a>
-        <a href="#">Postage &amp; Returns</a>
-        <a href="#">Size Guide</a>
-        <a href="#">Privacy Policy</a>
-        <a href="#">Conditions of Use</a>
-      </div>
-      <div class="footer-col-h" style="margin-top:2rem">Sister Stores</div>
-      <div class="footer-links">
-        <a href="https://www.shorties.com.au">Shorties Children Store</a>
-        <a href="https://outletnewtown.com.au">Outlet Newtown</a>
-      </div>
-    </div>
-    <div>
-      <div class="footer-col-h">Store Hours</div>
-      <div class="footer-hours-row"><span class="day">Monday</span><span>10am – 5pm</span></div>
-      <div class="footer-hours-row"><span class="day">Tuesday</span><span>10am – 5pm</span></div>
-      <div class="footer-hours-row"><span class="day">Wednesday</span><span>10am – 5pm</span></div>
-      <div class="footer-hours-row"><span class="day">Thursday</span><span>10am – 5pm</span></div>
-      <div class="footer-hours-row"><span class="day">Friday</span><span>10am – 5:30pm</span></div>
-      <div class="footer-hours-row"><span class="day">Saturday</span><span>10am – 6pm</span></div>
-      <div class="footer-hours-row"><span class="day">Sunday</span><span>10am – 5pm</span></div>
+      <div class="fh">Store Hours</div>
+      <div class="fhr"><span class="day">Monday</span><span>10am – 5pm</span></div>
+      <div class="fhr"><span class="day">Tuesday</span><span>10am – 5pm</span></div>
+      <div class="fhr"><span class="day">Wednesday</span><span>10am – 5pm</span></div>
+      <div class="fhr"><span class="day">Thursday</span><span>10am – 5pm</span></div>
+      <div class="fhr"><span class="day">Friday</span><span>10am – 5:30pm</span></div>
+      <div class="fhr"><span class="day">Saturday</span><span>10am – 6pm</span></div>
+      <div class="fhr"><span class="day">Sunday</span><span>10am – 5pm</span></div>
     </div>
   </div>
-
-  <hr class="footer-divider">
-
-  <div class="footer-bottom">
-    <div class="footer-copy">© 2026 Dragstar Clothing Australia</div>
-    <div class="footer-sister">
-      Sister stores: <a href="https://www.shorties.com.au">Shorties</a> &amp; <a href="https://outletnewtown.com.au">Outlet Newtown</a>
-    </div>
-    <div class="footer-payments">
-      <span class="pay-chip">Visa</span>
-      <span class="pay-chip">Mastercard</span>
-      <span class="pay-chip">Amex</span>
-      <span class="pay-chip">PayPal</span>
-      <span class="pay-chip">UnionPay</span>
-    </div>
+  <hr class="fdiv">
+  <div class="fbot">
+    <div class="fcopy">© 2026 Dragstar Clothing Australia</div>
+    <div class="fsister">Sister stores: <a href="https://www.shorties.com.au">Shorties</a> &amp; <a href="https://outletnewtown.com.au">Outlet Newtown</a></div>
+    <div class="fpay"><span class="pc">Visa</span><span class="pc">Mastercard</span><span class="pc">Amex</span><span class="pc">PayPal</span><span class="pc">UnionPay</span></div>
   </div>
-
-  <p class="footer-ack">Dragstar Clothing acknowledges the Traditional Owners of the land where we work and live — the Gadigal peoples of the Eora Nation — and pays respects to Elders past, present and future.</p>
+  <p class="fack">Dragstar Clothing acknowledges the Traditional Owners of the land where we work and live — the Gadigal peoples of the Eora Nation — and pays respects to Elders past, present and future.</p>
 </footer>
 
-<!-- JAVASCRIPT -->
 <script>
-/* --- CUSTOM CURSOR --- */
-const cursor = document.getElementById('cursor');
-const dot = document.getElementById('cursorDot');
-const ring = document.getElementById('cursorRing');
-let mx = 0, my = 0, rx = 0, ry = 0;
-document.addEventListener('mousemove', e => { mx = e.clientX; my = e.clientY; dot.style.left = mx + 'px'; dot.style.top = my + 'px'; });
-function animRing() { rx += (mx - rx) * 0.12; ry += (my - ry) * 0.12; ring.style.left = rx + 'px'; ring.style.top = ry + 'px'; requestAnimationFrame(animRing); }
-animRing();
-document.querySelectorAll('a, button, .prod-card, .cat-panel, .nav-icon, .nav-bag').forEach(el => {
-  el.addEventListener('mouseenter', () => document.body.classList.add('hovering'));
-  el.addEventListener('mouseleave', () => document.body.classList.remove('hovering'));
+/* ══ CURSOR ══ */
+const C=document.getElementById('cur'),R=document.getElementById('cur2');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{mx=e.clientX;my=e.clientY;C.style.left=mx+'px';C.style.top=my+'px'});
+document.addEventListener('mousedown',()=>document.body.classList.add('click'));
+document.addEventListener('mouseup',()=>document.body.classList.remove('click'));
+(function loop(){rx+=(mx-rx)*.1;ry+=(my-ry)*.1;R.style.left=rx+'px';R.style.top=ry+'px';requestAnimationFrame(loop)})();
+document.querySelectorAll('a,button,.prod-card,.cat-panel,.nav-ico,.nav-bag,.gram-item').forEach(el=>{
+  el.addEventListener('mouseenter',()=>document.body.classList.add('hov'));
+  el.addEventListener('mouseleave',()=>document.body.classList.remove('hov'));
 });
 
-/* --- NAV SCROLL --- */
-window.addEventListener('scroll', () => {
-  document.getElementById('mainNav').classList.toggle('scrolled', window.scrollY > 60);
-});
+/* ══ NAV ══ */
+window.addEventListener('scroll',()=>document.getElementById('nav').classList.toggle('solid',scrollY>50),{passive:true});
 
-/* --- MOBILE DRAWER --- */
-function openDrawer() {
-  document.getElementById('navDrawer').classList.add('open');
-  document.getElementById('drawerOverlay').classList.add('open');
-}
-function closeDrawer() {
-  document.getElementById('navDrawer').classList.remove('open');
-  document.getElementById('drawerOverlay').classList.remove('open');
-}
+/* ══ DRAWER ══ */
+function openD(){document.getElementById('drw').classList.add('on');document.getElementById('dbg').classList.add('on')}
+function closeD(){document.getElementById('drw').classList.remove('on');document.getElementById('dbg').classList.remove('on')}
 
-/* --- SCROLL REVEAL --- */
-const revealEls = document.querySelectorAll('.reveal, .reveal-left, .reveal-right');
-const revealObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('vis');
-      revealObs.unobserve(e.target);
-    }
+/* ══ CANVAS PARTICLES ══ */
+(function(){
+  const cv=document.getElementById('heroCanvas');
+  const ctx=cv.getContext('2d');
+  function resize(){cv.width=window.innerWidth;cv.height=window.innerHeight}
+  resize();window.addEventListener('resize',resize);
+  const pts=[];
+  for(let i=0;i<60;i++) pts.push({
+    x:Math.random()*cv.width, y:Math.random()*cv.height,
+    r:Math.random()*1.5+.3,
+    vx:(Math.random()-.5)*.25, vy:-(Math.random()*.4+.1),
+    a:Math.random(), life:Math.random(),
+    maxLife:Math.random()*200+100
   });
-}, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-revealEls.forEach(el => revealObs.observe(el));
-
-/* --- STAGGER PRODUCT CARDS --- */
-const prodObs = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      const cards = e.target.querySelectorAll('.prod-card');
-      cards.forEach((c, i) => {
-        c.style.opacity = '0';
-        c.style.transform = 'translateY(30px)';
-        c.style.transition = 'opacity 0.7s ease, transform 0.7s ease';
-        setTimeout(() => {
-          c.style.opacity = '1';
-          c.style.transform = 'translateY(0)';
-        }, i * 90);
-      });
-      prodObs.unobserve(e.target);
-    }
-  });
-}, { threshold: 0.05 });
-document.querySelectorAll('.prod-grid').forEach(g => prodObs.observe(g));
-
-/* --- HERO GOLD PARTICLES --- */
-const pWrap = document.getElementById('particles');
-for (let i = 0; i < 18; i++) {
-  const p = document.createElement('div');
-  p.className = 'particle';
-  const sz = Math.random() * 3 + 1;
-  p.style.cssText = `
-    width:${sz}px; height:${sz}px;
-    left:${Math.random() * 100}%;
-    animation-duration:${Math.random() * 12 + 8}s;
-    animation-delay:${Math.random() * 8}s;
-    opacity:0;
-  `;
-  pWrap.appendChild(p);
-}
-
-/* --- SIZE SELECTOR --- */
-document.querySelectorAll('.size-opt').forEach(btn => {
-  btn.addEventListener('click', () => {
-    btn.closest('.sizes-row').querySelectorAll('.size-opt').forEach(b => b.classList.remove('active'));
-    btn.classList.add('active');
-  });
-});
-
-/* --- PARALLAX HERO --- */
-window.addEventListener('scroll', () => {
-  const heroImg = document.querySelector('.hero-img-wrap');
-  if (heroImg) {
-    heroImg.style.transform = `translateY(${window.scrollY * 0.25}px)`;
+  function draw(){
+    ctx.clearRect(0,0,cv.width,cv.height);
+    pts.forEach(p=>{
+      p.life++;
+      if(p.life>p.maxLife){p.life=0;p.x=Math.random()*cv.width;p.y=cv.height+10}
+      p.x+=p.vx;p.y+=p.vy;
+      const prog=p.life/p.maxLife;
+      const alpha=prog<.1?prog/.1:prog>.8?(1-prog)/.2:.45;
+      ctx.beginPath();
+      ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+      ctx.fillStyle=`rgba(200,164,100,${alpha})`;
+      ctx.fill();
+    });
+    requestAnimationFrame(draw);
   }
+  draw();
+})();
+
+/* ══ HERO 3D PARALLAX (mouse tilt) ══ */
+const heroMid=document.getElementById('heroMid');
+const heroImg=document.getElementById('heroImgLayer');
+const heroBadge=document.querySelector('.hero-badge');
+const heroC=document.querySelector('.hero-c');
+document.addEventListener('mousemove',e=>{
+  const nx=(e.clientX/window.innerWidth-.5)*2;
+  const ny=(e.clientY/window.innerHeight-.5)*2;
+  heroImg.style.transform=`scale(1) translate(${nx*-12}px,${ny*-8}px)`;
+  heroMid.style.transform=`translate(${nx*4}px,${ny*3}px)`;
+  heroC.style.transform=`translate(${nx*6}px,${ny*4}px)`;
+  if(heroBadge) heroBadge.style.transform=`translate(${nx*-10}px,${ny*-6}px)`;
+},{passive:true});
+
+/* ══ HERO SCROLL PARALLAX ══ */
+window.addEventListener('scroll',()=>{
+  const s=scrollY;
+  heroImg.style.transform=`scale(1) translateY(${s*.3}px)`;
+  heroC.style.transform=`translateY(${s*.12}px)`;
+},{passive:true});
+
+/* ══ SCROLL REVEAL ══ */
+const ro=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{if(e.isIntersecting){e.target.classList.add('vis');ro.unobserve(e.target)}});
+},{threshold:.07,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal,.rL,.rR').forEach(el=>ro.observe(el));
+
+/* ══ STAGGER PRODUCTS ══ */
+const po=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.prod-card').forEach((c,i)=>{
+        c.style.opacity='0';c.style.transform='translateY(28px)';
+        c.style.transition=`opacity .7s ease ${i*.08}s,transform .7s ease ${i*.08}s,box-shadow .4s`;
+        setTimeout(()=>{c.style.opacity='1';c.style.transform='translateY(0)'},i*80+100);
+      });
+      po.unobserve(e.target);
+    }
+  });
+},{threshold:.04});
+document.querySelectorAll('.prod-grid').forEach(g=>po.observe(g));
+
+/* ══ 3D CARD TILT on product cards ══ */
+document.querySelectorAll('.prod-card').forEach(card=>{
+  const shine=card.querySelector('.prod-tilt-shine');
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(800px) rotateY(${x*10}deg) rotateX(${-y*10}deg) scale(1.02)`;
+    if(shine) shine.style.background=`radial-gradient(circle at ${e.clientX-r.left}px ${e.clientY-r.top}px,rgba(255,255,255,.1) 0%,transparent 60%)`;
+  });
+  card.addEventListener('mouseleave',()=>{
+    card.style.transform='perspective(800px) rotateY(0deg) rotateX(0deg) scale(1)';
+    card.style.transition='transform .6s ease,box-shadow .4s';
+  });
 });
+
+/* ══ ETHOS CARD TILT ══ */
+document.querySelectorAll('.ethos-card').forEach(card=>{
+  card.addEventListener('mousemove',e=>{
+    const r=card.getBoundingClientRect();
+    const x=(e.clientX-r.left)/r.width-.5;
+    const y=(e.clientY-r.top)/r.height-.5;
+    card.style.transform=`perspective(600px) rotateY(${x*8}deg) rotateX(${-y*6}deg) translateY(-6px)`;
+  });
+  card.addEventListener('mouseleave',()=>{card.style.transform='perspective(600px) rotateY(0) rotateX(0) translateY(0)'});
+});
+
+/* ══ MAGNETIC BUTTONS ══ */
+document.querySelectorAll('.btn-mag').forEach(btn=>{
+  btn.addEventListener('mousemove',e=>{
+    const r=btn.getBoundingClientRect();
+    const x=(e.clientX-r.left-r.width/2)*.35;
+    const y=(e.clientY-r.top-r.height/2)*.35;
+    btn.style.transform=`translate(${x}px,${y}px)`;
+  });
+  btn.addEventListener('mouseleave',()=>{btn.style.transform='translate(0,0)'});
+});
+
+/* ══ SIZE SELECTOR ══ */
+document.querySelectorAll('.sz').forEach(b=>{
+  b.addEventListener('click',()=>{
+    b.closest('.sz-row').querySelectorAll('.sz').forEach(s=>s.classList.remove('on'));
+    b.classList.add('on');
+  });
+});
+
+/* ══ COUNTER ANIMATION for story stats ══ */
+function animCount(el,target,suffix=''){
+  let start=0;
+  const isInfinity=target===Infinity;
+  const dur=1800,step=16;
+  const inc=isInfinity?0:target/(dur/step);
+  const t=setInterval(()=>{
+    if(isInfinity){el.textContent='∞';clearInterval(t);return}
+    start+=inc;
+    if(start>=target){start=target;clearInterval(t)}
+    el.textContent=Math.floor(start)+(suffix||'');
+  },step);
+}
+const statObs=new IntersectionObserver(entries=>{
+  entries.forEach(e=>{
+    if(e.isIntersecting){
+      e.target.querySelectorAll('.ss-n').forEach(el=>{
+        const txt=el.textContent.trim();
+        if(txt==='∞')return;
+        if(txt.includes('%')){animCount(el,parseInt(txt),'%')}
+        else if(txt.includes('+')){animCount(el,parseInt(txt),'+')}
+        else{animCount(el,parseInt(txt))}
+      });
+      statObs.unobserve(e.target);
+    }
+  });
+},{threshold:.3});
+document.querySelectorAll('.st-stats').forEach(el=>statObs.observe(el));
 </script>
 </body>
 </html>
